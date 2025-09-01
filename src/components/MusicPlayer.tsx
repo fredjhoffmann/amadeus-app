@@ -50,12 +50,14 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   const [localFile, setLocalFile] = useState<string | null>(null);
   const [sleepTimer, setSleepTimer] = useState<number | null>(null);
   const [timerActive, setTimerActive] = useState(false);
+  const [remainingTime, setRemainingTime] = useState<number>(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const countdownRef = useRef<NodeJS.Timeout | null>(null);
   const autoPlayNextRef = useRef(false);
   const wasPlayingRef = useRef(false);
 
@@ -195,28 +197,32 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     setIsMuted(!isMuted);
   };
 
-  const handleLocalFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file && file.type.startsWith('audio/')) {
-      const url = URL.createObjectURL(file);
-      setLocalFile(url);
-      if (audioRef.current) {
-        audioRef.current.src = url;
-        audioRef.current.load();
-      }
-    }
-  };
 
   const setSleepTimerMinutes = (minutes: number) => {
-    // Clear existing timer
+    // Clear existing timers
     if (timerRef.current) {
       clearTimeout(timerRef.current);
+    }
+    if (countdownRef.current) {
+      clearInterval(countdownRef.current);
     }
     
     setSleepTimer(minutes);
     setTimerActive(true);
+    setRemainingTime(minutes * 60); // Set remaining time in seconds
     
-    // Set new timer
+    // Start countdown interval (updates every second)
+    countdownRef.current = setInterval(() => {
+      setRemainingTime(prev => {
+        if (prev <= 1) {
+          clearInterval(countdownRef.current!);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    
+    // Set main timer
     timerRef.current = setTimeout(() => {
       const audio = audioRef.current;
       if (audio && isPlaying) {
@@ -241,6 +247,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
       }
       setTimerActive(false);
       setSleepTimer(null);
+      setRemainingTime(0);
     }, minutes * 60 * 1000);
   };
 
@@ -248,8 +255,12 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
+    if (countdownRef.current) {
+      clearInterval(countdownRef.current);
+    }
     setSleepTimer(null);
     setTimerActive(false);
+    setRemainingTime(0);
   };
 
   return (
@@ -374,19 +385,18 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
           {/* Secondary Controls */}
           <div className="flex items-center justify-center space-x-4">
             <Button
-              variant={isLooping ? "default" : "ghost"}
-              size="sm"
+              variant="ghost"
+              size="icon"
               onClick={toggleLoop}
-              className={`transition-all duration-200 ${
+              className={`transition-all duration-200 rounded-full ${
                 isLooping 
-                  ? 'text-primary-foreground bg-primary hover:bg-primary/90' 
+                  ? 'text-primary hover:text-primary/80' 
                   : 'text-muted-foreground hover:text-foreground'
               }`}
               aria-pressed={isLooping}
               aria-label={isLooping ? "Disable repeat" : "Enable repeat"}
             >
-              <Repeat className="h-4 w-4 mr-1" />
-              <span className="text-xs">{isLooping ? 'ON' : 'OFF'}</span>
+              <Repeat className="h-4 w-4" />
             </Button>
           </div>
 
@@ -485,29 +495,13 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
             {timerActive && (
               <div className="inline-flex items-center space-x-2 text-xs text-primary bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                <span>Silencing in {sleepTimer} minute{sleepTimer !== 1 ? 's' : ''}</span>
+                <span>
+                  {Math.floor(remainingTime / 60)}:{String(remainingTime % 60).padStart(2, '0')}
+                </span>
               </div>
             )}
           </div>
 
-          {/* Local File Upload */}
-          <div className="text-center">
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="audio/*"
-              onChange={handleLocalFile}
-              className="hidden"
-            />
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => fileInputRef.current?.click()}
-              className="text-xs text-muted-foreground hover:text-foreground"
-            >
-              📂 Load local MP3
-            </Button>
-          </div>
 
           {/* Status */}
           <div className="text-center">
