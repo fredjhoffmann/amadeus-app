@@ -87,7 +87,7 @@ This project is configured to run as a native iOS app using Capacitor. Follow th
 3. **Build and sync:**
    ```sh
    npm run build
-   npx cap sync
+   npx cap sync ios
    ```
 
 4. **Open in Xcode:**
@@ -99,6 +99,21 @@ This project is configured to run as a native iOS app using Capacitor. Follow th
    ```sh
    npx cap run ios
    ```
+
+### Quick Commands (Add to package.json scripts locally)
+
+For convenience, you can add these scripts to your local package.json after cloning:
+
+```json
+"scripts": {
+  "ios:add": "npx cap add ios",
+  "ios:sync": "npx cap sync ios", 
+  "ios:open": "npx cap open ios",
+  "ios:run": "npx cap run ios"
+}
+```
+
+Then use: `npm run ios:add`, `npm run ios:sync`, `npm run ios:open`, `npm run ios:run`
 
 ### iOS Configuration
 
