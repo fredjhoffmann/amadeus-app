@@ -30,12 +30,11 @@ const westClassicalTracks: Track[] = [
     duration: '5:03',
     url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' },
-      { type: 'audio/m4a', src: '/audio/debussy-clair-de-lune.m4a' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'François-Joël Thiollier',
-    source: 'YourClassical.org (Naxos)',
-    license: 'Public Radio Download'
+    performer: 'Public Domain Performance',
+    source: 'Archive.org',
+    license: 'Public Domain'
   },
   {
     id: 'chopin-nocturne-op9',
@@ -46,9 +45,9 @@ const westClassicalTracks: Track[] = [
     sources: [
       { type: 'audio/mpeg', src: '/audio/chopin-nocturne-op9-no2.mp3' }
     ],
-    performer: 'Denes Varjon',
-    source: 'YourClassical.org (Capriccio)',
-    license: 'Public Radio Download'
+    performer: 'Public Domain Performance',
+    source: 'Wikimedia Commons',
+    license: 'Public Domain'
   },
   {
     id: 'satie-gymnopedie',
@@ -59,8 +58,8 @@ const westClassicalTracks: Track[] = [
     sources: [
       { type: 'audio/mpeg', src: '/audio/satie-gymnopedie-1.mp3' }
     ],
-    performer: 'Public Domain Performance',
-    source: 'Wikimedia Commons',
+    performer: 'Kevin MacLeod',
+    source: 'Free Music Archive',
     license: 'Public Domain'
   },
   {
@@ -150,8 +149,8 @@ const westClassicalTracks: Track[] = [
     sources: [
       { type: 'audio/mpeg', src: '/audio/beethoven-moonlight.mp3' }
     ],
-    performer: 'Public Domain Performance',
-    source: 'Classical Music Archive',
+    performer: 'Paul Pitman',
+    source: 'Archive.org',
     license: 'Public Domain'
   },
   {
