@@ -8,7 +8,10 @@ export const Header: React.FC = () => {
           Amadeus
         </h1>
         <p className="text-muted-foreground font-serif italic">
-          A companion for peaceful bedtime moments
+          Classical music & meditation for peaceful bedtime moments
+        </p>
+        <p className="text-xs text-muted-foreground/60 mt-2">
+          22 carefully curated pieces • 70+ meditation prompts
         </p>
       </div>
       
