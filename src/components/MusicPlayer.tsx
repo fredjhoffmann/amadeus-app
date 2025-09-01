@@ -24,6 +24,7 @@ const classicalTracks: Track[] = [
     duration: '5:03',
     url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
+      { type: 'audio/mpeg', src: 'https://download.stream.publicradio.org/podcast/minnesota/classical/programs/free-downloads/2017/02/13/daily_download_20170213_128.mp3' },
       { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' },
       { type: 'audio/m4a', src: '/audio/debussy-clair-de-lune.m4a' }
     ],
@@ -68,7 +69,9 @@ export const MusicPlayer: React.FC = () => {
   const [isShuffled, setIsShuffled] = useState(false);
   const [showTrackList, setShowTrackList] = useState(false);
   const [audioError, setAudioError] = useState<string | null>(null);
+  const [localFile, setLocalFile] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const currentTrack = classicalTracks[currentTrackIndex];
 
@@ -196,6 +199,18 @@ export const MusicPlayer: React.FC = () => {
     setIsMuted(!isMuted);
   };
 
+  const handleLocalFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file && file.type.startsWith('audio/')) {
+      const url = URL.createObjectURL(file);
+      setLocalFile(url);
+      if (audioRef.current) {
+        audioRef.current.src = url;
+        audioRef.current.load();
+      }
+    }
+  };
+
   return (
     <div className="space-y-4">
       <Card className="bg-card/30 border border-border/20 backdrop-blur-sm shadow-card">
@@ -206,12 +221,13 @@ export const MusicPlayer: React.FC = () => {
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
             preload="metadata"
+            src={localFile || undefined}
           >
-            {currentTrack.sources?.map((source, index) => (
+            {!localFile && currentTrack.sources?.map((source, index) => (
               <source key={index} src={source.src} type={source.type} />
             ))}
             {/* Fallback for tracks without sources array */}
-            {!currentTrack.sources && <source src={currentTrack.url} type="audio/mpeg" />}
+            {!localFile && !currentTrack.sources && <source src={currentTrack.url} type="audio/mpeg" />}
           </audio>
           
           {/* Track Info */}
@@ -222,7 +238,13 @@ export const MusicPlayer: React.FC = () => {
             
             {audioError && (
               <div className="text-xs text-destructive bg-destructive/10 px-3 py-2 rounded border border-destructive/20">
-                ⚠️ Audio file missing - Add real recordings to /public/audio/ folder
+                ⚠️ {audioError}
+              </div>
+            )}
+            
+            {localFile && (
+              <div className="text-xs text-primary bg-primary/10 px-3 py-2 rounded border border-primary/20">
+                🎵 Playing local file
               </div>
             )}
           </div>
@@ -314,6 +336,25 @@ export const MusicPlayer: React.FC = () => {
             </div>
           </div>
 
+          {/* Local File Upload */}
+          <div className="text-center">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="audio/*"
+              onChange={handleLocalFile}
+              className="hidden"
+            />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => fileInputRef.current?.click()}
+              className="text-xs text-muted-foreground hover:text-foreground"
+            >
+              📂 Load local MP3
+            </Button>
+          </div>
+
           {/* Status */}
           <div className="text-center">
             <span className="text-xs text-muted-foreground">
@@ -321,9 +362,6 @@ export const MusicPlayer: React.FC = () => {
               {isLooping && !isShuffled && ' • Repeating'}
               {isShuffled && ' • Shuffled'}
             </span>
-            <div className="text-xs text-muted-foreground/60 mt-1">
-              📁 Ready for real audio files • Place MP3s in /public/audio/ folder • Try Musopen.org for public domain recordings
-            </div>
           </div>
         </div>
       </Card>

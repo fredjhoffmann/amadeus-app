@@ -11,7 +11,7 @@ export const Attribution: React.FC = () => {
           <div>
             <p className="font-medium">Debussy - Clair de Lune</p>
             <p>Performer: François-Joël Thiollier • Source: YourClassical.org</p>
-            <p className="text-muted-foreground/60">Available: <a href="http://download.publicradio.org/podcast/minnesota/classical/programs/free-downloads/2017/02/13/daily_download_20170213_128.mp3" target="_blank" rel="noopener" className="underline hover:text-primary">Direct Download</a></p>
+            <p className="text-muted-foreground/60">Available: <a href="https://download.stream.publicradio.org/podcast/minnesota/classical/programs/free-downloads/2017/02/13/daily_download_20170213_128.mp3" target="_blank" rel="noopener" className="underline hover:text-primary">Direct Download</a></p>
           </div>
           
           <div>
