@@ -65,16 +65,16 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   // Load audio sources when track changes
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || !currentTrack?.url) return;
 
     console.log(`🔄 Loading track: ${currentTrack.title}`);
-    console.log(`📂 Available sources:`, currentTrack.sources || []);
-    console.log(`🔗 URL fallback:`, currentTrack.url);
+    console.log(`🔗 URL:`, currentTrack.url);
     
     setAudioError(null);
     setIsPlaying(false);
     
-    // Load the new track
+    // Direct src assignment for single MP3 files - much more reliable
+    audio.src = currentTrack.url;
     audio.load();
   }, [currentTrackIndex, currentCollectionIndex, currentTrack]);
 
@@ -319,15 +319,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
             onTimeUpdate={() => setCurrentTime(audioRef.current?.currentTime || 0)}
             preload="metadata"
           >
-            {localFile ? (
-              <source src={localFile} type="audio/mpeg" />
-            ) : currentTrack.sources?.length ? (
-              currentTrack.sources.map((source, index) => (
-                <source key={`${source.src}-${index}`} src={source.src} type={source.type} />
-              ))
-            ) : (
-              <source src={currentTrack.url} type="audio/mpeg" />
-            )}
+            {/* Audio sources handled by direct src assignment in useEffect */}
           </audio>
           
           {/* Track Info */}

@@ -18,21 +18,33 @@ const basePrompts = [
 ];
 
 const promptsByTrack: Record<string, string[]> = {
-  'clair-de-lune': [
-    "Let moonlight soften the room as your breath settles into calm.",
-    "Breathe with the gentleness of moonlit water and quiet skies.",
+  'satie-gymnopedie-1': [
+    "Allow simplicity to hold you; let every note untie a small knot of the day.",
+    "Rest in the spacious quiet between the notes.",
   ],
   'beethoven-moonlight': [
     "Follow the slow arc of the melody and let thoughts dim like starlight.",
     "Let steady calm rise and fall like waves under a quiet moon.",
   ],
-  'satie-gymnopedie': [
-    "Allow simplicity to hold you; let every note untie a small knot of the day.",
-    "Rest in the spacious quiet between the notes.",
+  'chopin-prelude-e-minor': [
+    "Let this gentle prelude soften your thoughts like morning mist.",
+    "Breathe with Chopin's tender melancholy and find peace in transition.",
   ],
-  'chopin-nocturne-op9': [
-    "Invite tenderness into the room; let warm tone and breath cradle the moment.",
-    "Let this nocturne bathe the space in softness and care.",
+  'mendelssohn-song-without-words': [
+    "Let music speak what words cannot; find rest in unspoken understanding.",
+    "Allow this wordless song to carry away the day's unfinished conversations.",
+  ],
+  'beethoven-fur-elise': [
+    "Rest in the familiar embrace of this beloved melody.",
+    "Let cherished music wrap around you like a gentle lullaby.",
+  ],
+  'bach-prelude-c-major': [
+    "Find clarity in Bach's perfect architecture of sound.",
+    "Breathe with the mathematical beauty that brings order to chaos.",
+  ],
+  'schumann-traumerei': [
+    "Drift into the dreaming space where music and sleep gently meet.",
+    "Let Schumann's reverie guide you toward peaceful rest.",
   ],
 };
 
