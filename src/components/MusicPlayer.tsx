@@ -381,6 +381,15 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   const currentCollection = musicCollections[currentCollectionIndex];
   const currentTrack = currentCollection.tracks[currentTrackIndex];
 
+  // Force audio element to reload when track changes
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio && !localFile) {
+      audio.load(); // This reloads the audio element with new sources
+      console.log('Loading new track:', currentTrack.title, 'from collection:', currentCollection.name);
+    }
+  }, [currentTrackIndex, currentCollectionIndex, localFile, currentTrack.title, currentCollection.name]);
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -552,6 +561,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
         <div className="p-6 space-y-6">
           <audio
             ref={audioRef}
+            key={`${currentCollectionIndex}-${currentTrackIndex}`}
             loop={isLooping && !isShuffled}
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
@@ -559,7 +569,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
             src={localFile || undefined}
           >
             {!localFile && currentTrack.sources?.map((source, index) => (
-              <source key={index} src={source.src} type={source.type} />
+              <source key={`${source.src}-${index}`} src={source.src} type={source.type} />
             ))}
             {/* Fallback for tracks without sources array */}
             {!localFile && !currentTrack.sources && <source src={currentTrack.url} type="audio/mpeg" />}
