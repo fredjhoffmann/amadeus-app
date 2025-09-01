@@ -4,8 +4,10 @@ import { MeditationPrompt } from '@/components/MeditationPrompt';
 import { PhysicalControls } from '@/components/PhysicalControls';
 import { Attribution } from '@/components/Attribution';
 import { TrackList } from '@/components/TrackList';
+import { BackgroundSettings } from '@/components/BackgroundSettings';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { useTrackBackgrounds } from '@/hooks/useTrackBackgrounds';
 import heroBackground from '@/assets/hero-background.jpg';
 import bedtimePeaceful from '@/assets/bedtime-peaceful.jpg';
 import classicalPianoAmbient from '@/assets/classical-piano-ambient.jpg';
@@ -15,6 +17,12 @@ import { musicCollections } from '@/data/tracks';
 const Index = () => {
   const [currentCollectionIndex, setCurrentCollectionIndex] = React.useState(0);
   const [currentTrackIndex, setCurrentTrackIndex] = React.useState(0);
+  const { getBackgroundForTrack, loadCachedBackgrounds } = useTrackBackgrounds();
+  
+  // Load cached backgrounds on mount
+  React.useEffect(() => {
+    loadCachedBackgrounds();
+  }, [loadCachedBackgrounds]);
   
   const handleCollectionChange = (index: number) => {
     setCurrentCollectionIndex(index);
@@ -28,16 +36,13 @@ const Index = () => {
   // Get reactive background image based on current track
   const getBackgroundImage = () => {
     const currentTrack = musicCollections[currentCollectionIndex].tracks[currentTrackIndex];
-    
-    // Map specific tracks to themed backgrounds
-    if (currentTrack?.id?.includes('koto') || currentTrack?.composer?.includes('Japanese')) {
-      return japaneseGardenKoto;
-    } else if (currentCollectionIndex === 0) { // Western Bedtime collection
-      return classicalPianoAmbient;
-    } else {
-      return bedtimePeaceful;
-    }
+    return getBackgroundForTrack(currentTrack.id);
   };
+
+  // Get all tracks for background generation
+  const allTracks = React.useMemo(() => {
+    return musicCollections.flatMap(collection => collection.tracks);
+  }, []);
   return (
     <div 
       className="min-h-screen bg-gradient-background transition-all duration-1000 ease-in-out"
@@ -87,8 +92,10 @@ const Index = () => {
             currentTrackIndex={currentTrackIndex}
             onTrackSelect={handleTrackSelect}
           />
+
+          <BackgroundSettings allTracks={allTracks} />
           
-          <PhysicalControls 
+          <PhysicalControls
             onActionButtonPress={() => {
               // This will be handled by the MusicPlayer component's event listeners
               const event = new CustomEvent('actionbutton');
