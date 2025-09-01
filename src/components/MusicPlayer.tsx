@@ -211,15 +211,26 @@ export const MusicPlayer: React.FC = () => {
       } else if (e.key === ' ') {
         e.preventDefault();
         togglePlayPause();
+      } else if (e.key === 'F1' || e.code === 'F1') {
+        // Action button press
+        e.preventDefault();
+        togglePlayPause();
       }
+    };
+
+    // Custom action button handler
+    const handleActionButton = () => {
+      togglePlayPause();
     };
 
     audio.addEventListener('ended', handleEnded);
     window.addEventListener('keydown', handleVolumeChange);
+    window.addEventListener('actionbutton', handleActionButton);
 
     return () => {
       audio.removeEventListener('ended', handleEnded);
       window.removeEventListener('keydown', handleVolumeChange);
+      window.removeEventListener('actionbutton', handleActionButton);
     };
   }, [volume, isLooping]);
 

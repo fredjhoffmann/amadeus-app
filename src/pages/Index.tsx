@@ -6,6 +6,7 @@ import { PhysicalControls } from '@/components/PhysicalControls';
 import heroBackground from '@/assets/hero-background.jpg';
 
 const Index = () => {
+  const [musicPlayerRef, setMusicPlayerRef] = React.useState<{ togglePlayPause: () => void } | null>(null);
   return (
     <div 
       className="min-h-screen bg-gradient-background"
@@ -22,7 +23,13 @@ const Index = () => {
         <div className="space-y-6">
           <MusicPlayer />
           <MeditationPrompt />
-          <PhysicalControls />
+          <PhysicalControls 
+            onActionButtonPress={() => {
+              // This will be handled by the MusicPlayer component's event listeners
+              const event = new CustomEvent('actionbutton');
+              window.dispatchEvent(event);
+            }}
+          />
         </div>
         
         <footer className="mt-12 text-center">
