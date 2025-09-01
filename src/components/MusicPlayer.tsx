@@ -206,6 +206,15 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     const nextIndex = (currentTrackIndex + 1) % currentCollection.tracks.length;
     setCurrentTrackIndex(nextIndex);
     setCurrentTime(0);
+    // Auto-play the next track
+    setTimeout(() => {
+      if (audioRef.current) {
+        audioRef.current.play().catch(err => {
+          console.error('Auto-play failed:', err);
+          setAudioError('Auto-play failed - click play to continue');
+        });
+      }
+    }, 100);
   };
 
   const previousTrack = () => {
