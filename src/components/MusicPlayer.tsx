@@ -13,31 +13,27 @@ interface Track {
 }
 
 const classicalTracks: Track[] = [
-  // Demo tracks with actual working URLs for testing
   {
-    id: 'demo-1',
-    title: 'Nocturne in E-flat major, Op. 9, No. 2',
-    composer: 'Frédéric Chopin',
-    duration: '4:30',
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav' // Demo placeholder
-  },
-  {
-    id: 'demo-2', 
+    id: 'clair-de-lune',
     title: 'Clair de Lune',
     composer: 'Claude Debussy',
     duration: '5:03',
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav' // Demo placeholder
+    url: '/audio/debussy-clair-de-lune.mp3' // Ready for real audio file
   },
   {
-    id: 'demo-3',
+    id: 'chopin-nocturne',
+    title: 'Nocturne in E-flat major, Op. 9, No. 2',
+    composer: 'Frédéric Chopin',
+    duration: '4:30',
+    url: '/audio/chopin-nocturne-op9-no2.mp3' // Ready for real audio file
+  },
+  {
+    id: 'satie-gymnopedie',
     title: 'Gymnopédie No. 1',
     composer: 'Erik Satie',
     duration: '3:33',
-    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav' // Demo placeholder
-  },
-  
-  // For now, showing fewer tracks until real audio files are added
-  // Full collection of 22 tracks available - just needs audio files uploaded
+    url: '/audio/satie-gymnopedie-1.mp3' // Ready for real audio file
+  }
 ];
 
 export const MusicPlayer: React.FC = () => {
@@ -198,7 +194,7 @@ export const MusicPlayer: React.FC = () => {
             
             {audioError && (
               <div className="text-xs text-destructive bg-destructive/10 px-3 py-2 rounded border border-destructive/20">
-                ⚠️ Demo Mode: {audioError}
+                ⚠️ Audio file missing - Add real recordings to /public/audio/ folder
               </div>
             )}
           </div>
@@ -298,7 +294,7 @@ export const MusicPlayer: React.FC = () => {
               {isShuffled && ' • Shuffled'}
             </span>
             <div className="text-xs text-muted-foreground/60 mt-1">
-              🎵 Demo with placeholder audio - Add real classical music files to `/public/audio/` folder
+              📁 Ready for real audio files • Place MP3s in /public/audio/ folder • Try Musopen.org for public domain recordings
             </div>
           </div>
         </div>
