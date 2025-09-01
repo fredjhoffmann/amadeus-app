@@ -30,7 +30,6 @@ const westClassicalTracks: Track[] = [
     duration: '5:03',
     url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/mpeg', src: 'https://download.stream.publicradio.org/podcast/minnesota/classical/programs/free-downloads/2017/02/13/daily_download_20170213_128.mp3' },
       { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' },
       { type: 'audio/m4a', src: '/audio/debussy-clair-de-lune.m4a' }
     ],
@@ -45,7 +44,6 @@ const westClassicalTracks: Track[] = [
     duration: '4:30',
     url: '/audio/chopin-nocturne-op9-no2.mp3',
     sources: [
-      { type: 'audio/mpeg', src: 'https://download.stream.publicradio.org/podcast/minnesota/classical/programs/free-downloads/2016/02/04/daily_download_20160204_128.mp3' },
       { type: 'audio/mpeg', src: '/audio/chopin-nocturne-op9-no2.mp3' }
     ],
     performer: 'Denes Varjon',
@@ -59,7 +57,6 @@ const westClassicalTracks: Track[] = [
     duration: '3:33',
     url: '/audio/satie-gymnopedie-1.mp3',
     sources: [
-      { type: 'audio/ogg', src: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Satie_Gymnopedie_No_1.ogg' },
       { type: 'audio/mpeg', src: '/audio/satie-gymnopedie-1.mp3' }
     ],
     performer: 'Public Domain Performance',
@@ -71,112 +68,104 @@ const westClassicalTracks: Track[] = [
     title: 'Nocturne in C-sharp minor, Op. Posth.',
     composer: 'Frédéric Chopin',
     duration: '4:45',
-    url: '/audio/chopin-nocturne-cs-minor.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/ogg', src: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Frederic_Chopin_-_Nocturne_in_C-sharp_minor.ogg' },
-      { type: 'audio/mpeg', src: '/audio/chopin-nocturne-cs-minor.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Randolph Hokanson',
-    source: 'Wikimedia Commons',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'debussy-reverie',
     title: 'Rêverie, L. 68',
     composer: 'Claude Debussy',
     duration: '4:20',
-    url: '/audio/debussy-reverie.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/debussy-reverie/stream/' },
-      { type: 'audio/mpeg', src: '/audio/debussy-reverie.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Public Domain Performance',
-    source: 'Free Music Archive',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'schumann-traumerei',
     title: 'Träumerei, Op. 15 No. 7',
     composer: 'Robert Schumann',
     duration: '2:30',
-    url: '/audio/schumann-traumerei.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/ogg', src: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Schumann_Traumerei.ogg' },
-      { type: 'audio/mpeg', src: '/audio/schumann-traumerei.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Public Domain Performance',
-    source: 'Wikimedia Commons',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'ravel-pavane',
     title: 'Pavane pour une infante défunte',
     composer: 'Maurice Ravel',
     duration: '6:30',
-    url: '/audio/ravel-pavane.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/ogg', src: 'https://upload.wikimedia.org/wikipedia/commons/d/d0/Maurice_Ravel_-_Pavane_pour_une_infante_defunte.ogg' },
-      { type: 'audio/mpeg', src: '/audio/ravel-pavane.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Vadim Chaimovich',
-    source: 'Wikimedia Commons',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'field-nocturne-5',
     title: 'Nocturne No. 5 in B-flat major',
     composer: 'John Field',
     duration: '4:15',
-    url: '/audio/field-nocturne-5.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/john-field-nocturne-no-5/stream/' },
-      { type: 'audio/mpeg', src: '/audio/field-nocturne-5.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Public Domain Performance',
-    source: 'Free Music Archive',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'liszt-consolation-3',
     title: 'Consolation No. 3 in D-flat major',
     composer: 'Franz Liszt',
     duration: '4:00',
-    url: '/audio/liszt-consolation-3.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/ogg', src: 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Liszt_consolation_3_db.ogg' },
-      { type: 'audio/mpeg', src: '/audio/liszt-consolation-3.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Martha Goldstein',
-    source: 'Wikimedia Commons',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'beethoven-moonlight',
     title: 'Moonlight Sonata (1st Movement), Op. 27 No. 2',
     composer: 'Ludwig van Beethoven',
     duration: '5:30',
-    url: '/audio/beethoven-moonlight.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/ogg', src: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Ludwig_van_Beethoven_-_sonata_no._14_in_c_sharp_minor_%27moonlight%27%2C_op._27_no._2_-_i._adagio_sostenuto.ogg' },
-      { type: 'audio/mpeg', src: '/audio/beethoven-moonlight.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Paul Pitman',
-    source: 'Wikimedia Commons',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'mendelssohn-song-without-words',
     title: 'Song Without Words, Op. 30 No. 6 (Venetian Boat Song)',
     composer: 'Felix Mendelssohn',
     duration: '2:45',
-    url: '/audio/mendelssohn-song-without-words.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/mendelssohn-venetian-boat-song-op-30-no-6/stream/' },
-      { type: 'audio/mpeg', src: '/audio/mendelssohn-song-without-words.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Gregor Quendel',
-    source: 'Free Music Archive',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   }
 ];
 
@@ -186,140 +175,130 @@ const worldwideBedtimeTracks: Track[] = [
     title: 'Rokudan no Shirabe',
     composer: 'Yatsuhashi Kengyō (Traditional Japanese)',
     duration: '6:00',
-    url: '/audio/rokudan-no-shirabe.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/mpeg', src: 'https://archive.org/download/lp_the-koto-music-of-japan_various_0/disc1/03.%20Rokudan-No-Shirabe%20%28Music%20Of%20Six%20Steps%29.mp3' },
-      { type: 'audio/mpeg', src: '/audio/rokudan-no-shirabe.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Traditional Performance',
-    source: 'Archive.org',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'high-mountains-flowing-water',
     title: 'High Mountains and Flowing Water (Gao Shan Liu Shui)',
     composer: 'Bo Ya (Traditional Chinese)',
     duration: '5:30',
-    url: '/audio/gao-shan-liu-shui.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/ogg', src: 'https://upload.wikimedia.org/wikipedia/commons/f/f2/Traditional_Chinese_music_Flowing_Water.ogg' },
-      { type: 'audio/mpeg', src: '/audio/gao-shan-liu-shui.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Traditional Guzheng Performance',
-    source: 'Wikimedia Commons',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'raga-yaman',
     title: 'Raga Yaman',
     composer: 'Traditional Indian Classical',
     duration: '8:00',
-    url: '/audio/raga-yaman.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/raga-yaman-meditation/stream/' },
-      { type: 'audio/mpeg', src: '/audio/raga-yaman.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Traditional Indian Musicians',
-    source: 'Free Music Archive',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'shur-santur',
     title: 'Shur (Dastgah-e Shur)',
     composer: 'Traditional Persian',
     duration: '6:45',
-    url: '/audio/dastgah-shur.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/mpeg', src: 'https://archive.org/download/PersianClassical/Dastgah_Shur_Santur.mp3' },
-      { type: 'audio/mpeg', src: '/audio/dastgah-shur.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Traditional Santur Performance',
-    source: 'Archive.org',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'alf-leila-wa-leila',
     title: 'Alf Leila Wa Leila (One Thousand and One Nights)',
     composer: 'Traditional Arabic',
     duration: '5:15',
-    url: '/audio/alf-leila-wa-leila.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/traditional-arabic-oud-meditation/stream/' },
-      { type: 'audio/mpeg', src: '/audio/alf-leila-wa-leila.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Traditional Oud Performance',
-    source: 'Free Music Archive',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'ney-taksimi',
     title: 'Ney Taksimi (Improvisation)',
     composer: 'Traditional Turkish',
     duration: '4:30',
-    url: '/audio/ney-taksimi.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/turkish-ney-meditation/stream/' },
-      { type: 'audio/mpeg', src: '/audio/ney-taksimi.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Traditional Ney Performance',
-    source: 'Free Music Archive',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'arirang',
     title: 'Arirang',
     composer: 'Traditional Korean',
     duration: '4:00',
-    url: '/audio/arirang-gayageum.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/wav', src: 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Gyeonggi_Arirang.wav' },
-      { type: 'audio/mpeg', src: '/audio/arirang-gayageum.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Traditional Gayageum Performance',
-    source: 'Wikimedia Commons',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'puspanjali',
     title: 'Puspanjali',
     composer: 'Traditional Balinese',
     duration: '7:00',
-    url: '/audio/puspanjali-gamelan.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/mpeg', src: 'https://archive.org/download/indonesia-1952-dancers-of-bali-pianton-village/01-puspanjali.mp3' },
-      { type: 'audio/mpeg', src: '/audio/puspanjali-gamelan.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Pliatan Gamelan Orchestra',
-    source: 'Archive.org (1952)',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'lao-duang-duean',
     title: 'Lao Duang Duean',
     composer: 'H.R.H. Prince Benbhadanabhongse (Traditional Thai)',
     duration: '5:45',
-    url: '/audio/lao-duang-duean.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/lao-duang-duean-thai-classical/stream/' },
-      { type: 'audio/mpeg', src: '/audio/lao-duang-duean.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Traditional Thai Musicians',
-    source: 'Free Music Archive',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   },
   {
     id: 'ladrang-wilujeng',
     title: 'Ladrang Wilujeng',
     composer: 'Traditional Javanese',
     duration: '6:30',
-    url: '/audio/ladrang-wilujeng.mp3',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/javanese-gamelan-wilujeng/stream/' },
-      { type: 'audio/mpeg', src: '/audio/ladrang-wilujeng.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
     ],
-    performer: 'Traditional Javanese Gamelan',
-    source: 'Free Music Archive',
-    license: 'Public Domain'
+    performer: 'Demo - Using Clair de Lune audio',
+    source: 'Placeholder',
+    license: 'Demo'
   }
 ];
 
@@ -462,16 +441,24 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     } else {
       // Handle browser autoplay restrictions and other playback issues
       setAudioError(null);
-      audio.play().catch(err => {
-        console.error('Playback error:', err);
-        const name = (err as any)?.name || '';
-        if (name === 'NotAllowedError') {
-          setAudioError('Click to enable audio playback');
-        } else {
-          setAudioError('Unable to play this track (format or network issue)');
+      // Add small delay to prevent AbortError when switching tracks rapidly
+      setTimeout(() => {
+        if (audioRef.current) {
+          audioRef.current.play().catch(err => {
+            console.error('Playback error:', err);
+            const name = (err as any)?.name || '';
+            if (name === 'NotAllowedError') {
+              setAudioError('Click to enable audio playback');
+            } else if (name === 'AbortError') {
+              // Ignore AbortError - it's just from rapid track changes
+              return;
+            } else {
+              setAudioError('Unable to play this track (format or network issue)');
+            }
+            setIsPlaying(false);
+          });
         }
-        setIsPlaying(false);
-      });
+      }, 100);
     }
     setIsPlaying(!isPlaying);
   };
