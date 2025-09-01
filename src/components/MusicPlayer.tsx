@@ -381,14 +381,6 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   const currentCollection = musicCollections[currentCollectionIndex];
   const currentTrack = currentCollection.tracks[currentTrackIndex];
 
-  // Force audio element to reload when track changes
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (audio && !localFile) {
-      audio.load(); // This reloads the audio element with new sources
-      console.log('Loading new track:', currentTrack.title, 'from collection:', currentCollection.name);
-    }
-  }, [currentTrackIndex, currentCollectionIndex, localFile, currentTrack.title, currentCollection.name]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -468,10 +460,16 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     if (isPlaying) {
       audio.pause();
     } else {
-      // Handle browser autoplay restrictions
+      // Handle browser autoplay restrictions and other playback issues
+      setAudioError(null);
       audio.play().catch(err => {
-        console.error('Autoplay prevented:', err);
-        setAudioError('Click to enable audio playback');
+        console.error('Playback error:', err);
+        const name = (err as any)?.name || '';
+        if (name === 'NotAllowedError') {
+          setAudioError('Click to enable audio playback');
+        } else {
+          setAudioError('Unable to play this track (format or network issue)');
+        }
         setIsPlaying(false);
       });
     }
