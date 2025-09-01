@@ -2,7 +2,7 @@ import React from 'react';
 import { Header } from '@/components/Header';
 import { MusicPlayer } from '@/components/MusicPlayer';
 import { MeditationPrompt } from '@/components/MeditationPrompt';
-import { PhysicalControls } from '@/components/PhysicalControls';
+import { Attribution } from '@/components/Attribution';
 import heroBackground from '@/assets/hero-background.jpg';
 
 const Index = () => {
@@ -31,6 +31,8 @@ const Index = () => {
             }}
           />
         </div>
+        
+        <Attribution />
         
         <footer className="mt-12 text-center">
           <p className="text-xs text-muted-foreground/40 font-serif">
