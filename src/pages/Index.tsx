@@ -1,11 +1,35 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import React from 'react';
+import { Header } from '@/components/Header';
+import { MusicPlayer } from '@/components/MusicPlayer';
+import { MeditationPrompt } from '@/components/MeditationPrompt';
+import { PhysicalControls } from '@/components/PhysicalControls';
+import heroBackground from '@/assets/hero-background.jpg';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div 
+      className="min-h-screen bg-gradient-background"
+      style={{
+        backgroundImage: `linear-gradient(rgba(34, 31, 70, 0.85), rgba(26, 23, 61, 0.95)), url(${heroBackground})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      <div className="container mx-auto px-4 py-8 max-w-md">
+        <Header />
+        
+        <div className="space-y-6">
+          <MusicPlayer />
+          <MeditationPrompt />
+          <PhysicalControls />
+        </div>
+        
+        <footer className="mt-12 text-center">
+          <p className="text-xs text-muted-foreground/40 font-serif">
+            Designed for peaceful nights and sweet dreams
+          </p>
+        </footer>
       </div>
     </div>
   );
