@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { TrackList } from '@/components/TrackList';
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Repeat, Shuffle } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Repeat } from 'lucide-react';
 
 import type { Track, MusicCollection } from '@/data/tracks';
 import { musicCollections } from '@/data/tracks';
@@ -44,8 +44,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.3);
   const [isMuted, setIsMuted] = useState(false);
-  const [isLooping, setIsLooping] = useState(true);
-  const [isShuffled, setIsShuffled] = useState(false);
+  const [isLooping, setIsLooping] = useState(false);
   const [showTrackList, setShowTrackList] = useState(false);
   const [audioError, setAudioError] = useState<string | null>(null);
   const [localFile, setLocalFile] = useState<string | null>(null);
@@ -204,24 +203,14 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   };
 
   const nextTrack = () => {
-    if (isShuffled) {
-      const randomIndex = Math.floor(Math.random() * currentCollection.tracks.length);
-      setCurrentTrackIndex(randomIndex);
-    } else {
-      const nextIndex = (currentTrackIndex + 1) % currentCollection.tracks.length;
-      setCurrentTrackIndex(nextIndex);
-    }
+    const nextIndex = (currentTrackIndex + 1) % currentCollection.tracks.length;
+    setCurrentTrackIndex(nextIndex);
     setCurrentTime(0);
   };
 
   const previousTrack = () => {
-    if (isShuffled) {
-      const randomIndex = Math.floor(Math.random() * currentCollection.tracks.length);
-      setCurrentTrackIndex(randomIndex);
-    } else {
-      const prevIndex = currentTrackIndex === 0 ? currentCollection.tracks.length - 1 : currentTrackIndex - 1;
-      setCurrentTrackIndex(prevIndex);
-    }
+    const prevIndex = currentTrackIndex === 0 ? currentCollection.tracks.length - 1 : currentTrackIndex - 1;
+    setCurrentTrackIndex(prevIndex);
     setCurrentTime(0);
   };
 
@@ -236,9 +225,6 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     setIsLooping(!isLooping);
   };
 
-  const toggleShuffle = () => {
-    setIsShuffled(!isShuffled);
-  };
 
   const toggleMute = () => {
     setIsMuted(!isMuted);
@@ -308,7 +294,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
           <audio
             ref={audioRef}
             key={`${currentCollectionIndex}-${currentTrackIndex}`}
-            loop={isLooping && !isShuffled}
+            loop={isLooping}
             onPlay={() => {
               console.log(`🎵 Playing: ${currentTrack.title}`);
               setIsPlaying(true);
@@ -377,15 +363,6 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
 
           {/* Secondary Controls */}
           <div className="flex items-center justify-center space-x-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleShuffle}
-              className={`text-muted-foreground hover:text-foreground ${isShuffled ? 'text-primary' : ''}`}
-            >
-              <Shuffle className="h-4 w-4" />
-            </Button>
-            
             <Button
               variant="ghost"
               size="sm"
@@ -519,8 +496,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
           <div className="text-center">
             <span className="text-xs text-muted-foreground">
               Track {currentTrackIndex + 1} of {currentCollection.tracks.length} • {currentCollection.name}
-              {isLooping && !isShuffled && ' • Repeating'}
-              {isShuffled && ' • Shuffled'}
+              {isLooping && ' • Repeating'}
             </span>
           </div>
         </div>
