@@ -59,6 +59,67 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- Capacitor (for native mobile apps)
+
+## How can I run this as a native iOS app?
+
+This project is configured to run as a native iOS app using Capacitor. Follow these steps:
+
+### Prerequisites
+- macOS with Xcode installed
+- Node.js & npm
+
+### Setup Steps
+
+1. **Export to GitHub and clone locally:**
+   ```sh
+   # Clone your GitHub repository
+   git clone <YOUR_GIT_URL>
+   cd <YOUR_PROJECT_NAME>
+   npm install
+   ```
+
+2. **Add iOS platform:**
+   ```sh
+   npx cap add ios
+   ```
+
+3. **Build and sync:**
+   ```sh
+   npm run build
+   npx cap sync
+   ```
+
+4. **Open in Xcode:**
+   ```sh
+   npx cap open ios
+   ```
+   
+   Or run directly:
+   ```sh
+   npx cap run ios
+   ```
+
+### iOS Configuration
+
+For background audio playback (recommended for this music app):
+
+1. Open the iOS project in Xcode
+2. Select your app target
+3. Go to "Signing & Capabilities"
+4. Add "Background Modes" capability
+5. Check "Audio, AirPlay, and Picture in Picture"
+
+### Development with Hot Reload
+
+The app is configured to load from the Lovable preview URL for development, enabling hot reload on your device when connected to the same network.
+
+### Production Build
+
+For App Store submission, you'll need to:
+1. Change the `server.url` to point to your production domain
+2. Update the app icon and splash screen
+3. Configure proper signing certificates in Xcode
 
 ## How can I deploy this project?
 
