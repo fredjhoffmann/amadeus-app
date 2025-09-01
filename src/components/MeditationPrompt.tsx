@@ -49,29 +49,13 @@ const promptsByTrack: Record<string, string[]> = {
   ],
   
   // Worldwide Bedtime
-  'rokudan-no-shirabe': [
-    "Let the koto's ancient strings guide you through six steps toward inner stillness.",
-    "Find harmony in the traditional rhythms that have soothed souls for centuries.",
+  'koto-shamisen': [
+    "The ancient sounds of koto and shamisen carry the wisdom of countless generations. Let their resonance connect you to this timeless flow.",
+    "Feel how these traditional instruments speak directly to something ancient within you, beyond words or concepts.",
   ],
-  'high-mountains-flowing-water': [
-    "Breathe with the mountain's wisdom and flow like gentle water finding its way.",
-    "Let the guqin's voice carry you to peaks of tranquility and valleys of rest.",
-  ],
-  'raga-yaman': [
-    "Rest in the evening raga's embrace as day melts into peaceful night.",
-    "Allow the sitar's contemplative notes to guide your spirit homeward.",
-  ],
-  'oud-maqam-bayati': [
-    "Let the oud's warm resonance envelop you like desert starlight.",
-    "Find refuge in the ancient maqam's timeless patterns of beauty.",
-  ],
-  'arirang-gayageum': [
-    "Rest in the folk song's gentle longing and find peace in its familiar comfort.",
-    "Let the gayageum's delicate plucking soothe your heart like falling petals.",
-  ],
-  'temple-life': [
-    "Breathe with the temple's rhythm and find sanctuary in sacred stillness.",
-    "Let monastic tranquility wash over your day's accumulated tensions.",
+  'koto-improvisation': [
+    "In this spontaneous koto performance, notice how beauty emerges from the moment itself. Trust your own natural rhythms.",
+    "Each plucked string is a meditation, each phrase a breath. Let yourself be as present as this musician was in creating these sounds.",
   ],
 };
 
