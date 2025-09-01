@@ -336,9 +336,21 @@ const musicCollections: MusicCollection[] = [
   }
 ];
 
-export const MusicPlayer: React.FC = () => {
-  const [currentCollectionIndex, setCurrentCollectionIndex] = useState(0);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+interface MusicPlayerProps {
+  currentCollectionIndex?: number;
+  currentTrackIndex?: number;
+  onCollectionChange?: (index: number) => void;
+  onTrackSelect?: (index: number) => void;
+}
+
+export const MusicPlayer: React.FC<MusicPlayerProps> = ({
+  currentCollectionIndex: externalCollectionIndex,
+  currentTrackIndex: externalTrackIndex,
+  onCollectionChange,
+  onTrackSelect,
+}) => {
+  const [currentCollectionIndex, setCurrentCollectionIndex] = useState(externalCollectionIndex || 0);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(externalTrackIndex || 0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.3);
   const [isMuted, setIsMuted] = useState(false);
@@ -466,6 +478,7 @@ export const MusicPlayer: React.FC = () => {
 
   const selectTrack = (index: number) => {
     setCurrentTrackIndex(index);
+    onTrackSelect?.(index);
   };
 
   const toggleLoop = () => {
@@ -539,27 +552,6 @@ export const MusicPlayer: React.FC = () => {
             {!localFile && !currentTrack.sources && <source src={currentTrack.url} type="audio/mpeg" />}
           </audio>
           
-          {/* Collection Selector */}
-          <div className="text-center space-y-2">
-            <p className="text-xs text-muted-foreground">Collection</p>
-            <div className="flex justify-center space-x-2">
-              {musicCollections.map((collection, index) => (
-                <Button
-                  key={collection.id}
-                  variant={currentCollectionIndex === index ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => {
-                    setCurrentCollectionIndex(index);
-                    setCurrentTrackIndex(0);
-                  }}
-                  className="text-xs px-3 py-1 h-auto"
-                >
-                  {collection.name}
-                </Button>
-              ))}
-            </div>
-          </div>
-
           {/* Track Info */}
           <div className="text-center space-y-2">
             <h2 className="text-xl font-serif text-foreground leading-tight">{currentTrack.title}</h2>
@@ -729,14 +721,6 @@ export const MusicPlayer: React.FC = () => {
           </div>
         </div>
       </Card>
-
-      <TrackList
-        tracks={currentCollection.tracks}
-        currentTrackIndex={currentTrackIndex}
-        onTrackSelect={selectTrack}
-        isVisible={showTrackList}
-        onToggle={() => setShowTrackList(!showTrackList)}
-      />
     </div>
   );
 };

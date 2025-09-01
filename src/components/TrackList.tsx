@@ -15,16 +15,12 @@ interface TrackListProps {
   tracks: Track[];
   currentTrackIndex: number;
   onTrackSelect: (index: number) => void;
-  isVisible: boolean;
-  onToggle: () => void;
 }
 
 export const TrackList: React.FC<TrackListProps> = ({
   tracks,
   currentTrackIndex,
   onTrackSelect,
-  isVisible,
-  onToggle,
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const tracksPerPage = 5;
@@ -47,36 +43,12 @@ export const TrackList: React.FC<TrackListProps> = ({
     }
   };
 
-  if (!isVisible) {
-    return (
-      <Card className="bg-card/20 border border-border/10 backdrop-blur-sm">
-        <div className="p-4">
-          <Button
-            variant="ghost"
-            onClick={onToggle}
-            className="w-full text-muted-foreground hover:text-foreground flex items-center justify-center gap-2"
-          >
-            <Music className="h-4 w-4" />
-            <span className="text-sm">Browse {tracks.length} Classical Pieces</span>
-          </Button>
-        </div>
-      </Card>
-    );
-  }
-
   return (
     <Card className="bg-card/30 border border-border/20 backdrop-blur-sm shadow-card">
       <div className="p-4 space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-serif text-foreground">Classical Collection</h3>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onToggle}
-            className="text-muted-foreground hover:text-foreground"
-          >
-            ×
-          </Button>
+          <h3 className="text-lg font-serif text-foreground">Track List</h3>
+          <span className="text-xs text-muted-foreground">{tracks.length} tracks</span>
         </div>
 
         <div className="space-y-2 max-h-80 overflow-y-auto">
