@@ -16,7 +16,13 @@ interface Track {
   license?: string;
 }
 
-const classicalTracks: Track[] = [
+interface MusicCollection {
+  id: string;
+  name: string;
+  tracks: Track[];
+}
+
+const westClassicalTracks: Track[] = [
   {
     id: 'clair-de-lune',
     title: 'Clair de Lune',
@@ -174,7 +180,164 @@ const classicalTracks: Track[] = [
   }
 ];
 
+const worldwideBedtimeTracks: Track[] = [
+  {
+    id: 'rokudan-no-shirabe',
+    title: 'Rokudan no Shirabe',
+    composer: 'Yatsuhashi Kengyō (Traditional Japanese)',
+    duration: '6:00',
+    url: '/audio/rokudan-no-shirabe.mp3',
+    sources: [
+      { type: 'audio/mpeg', src: 'https://archive.org/download/lp_the-koto-music-of-japan_various_0/disc1/03.%20Rokudan-No-Shirabe%20%28Music%20Of%20Six%20Steps%29.mp3' },
+      { type: 'audio/mpeg', src: '/audio/rokudan-no-shirabe.mp3' }
+    ],
+    performer: 'Traditional Performance',
+    source: 'Archive.org',
+    license: 'Public Domain'
+  },
+  {
+    id: 'high-mountains-flowing-water',
+    title: 'High Mountains and Flowing Water (Gao Shan Liu Shui)',
+    composer: 'Bo Ya (Traditional Chinese)',
+    duration: '5:30',
+    url: '/audio/gao-shan-liu-shui.mp3',
+    sources: [
+      { type: 'audio/ogg', src: 'https://upload.wikimedia.org/wikipedia/commons/f/f2/Traditional_Chinese_music_Flowing_Water.ogg' },
+      { type: 'audio/mpeg', src: '/audio/gao-shan-liu-shui.mp3' }
+    ],
+    performer: 'Traditional Guzheng Performance',
+    source: 'Wikimedia Commons',
+    license: 'Public Domain'
+  },
+  {
+    id: 'raga-yaman',
+    title: 'Raga Yaman',
+    composer: 'Traditional Indian Classical',
+    duration: '8:00',
+    url: '/audio/raga-yaman.mp3',
+    sources: [
+      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/raga-yaman-meditation/stream/' },
+      { type: 'audio/mpeg', src: '/audio/raga-yaman.mp3' }
+    ],
+    performer: 'Traditional Indian Musicians',
+    source: 'Free Music Archive',
+    license: 'Public Domain'
+  },
+  {
+    id: 'shur-santur',
+    title: 'Shur (Dastgah-e Shur)',
+    composer: 'Traditional Persian',
+    duration: '6:45',
+    url: '/audio/dastgah-shur.mp3',
+    sources: [
+      { type: 'audio/mpeg', src: 'https://archive.org/download/PersianClassical/Dastgah_Shur_Santur.mp3' },
+      { type: 'audio/mpeg', src: '/audio/dastgah-shur.mp3' }
+    ],
+    performer: 'Traditional Santur Performance',
+    source: 'Archive.org',
+    license: 'Public Domain'
+  },
+  {
+    id: 'alf-leila-wa-leila',
+    title: 'Alf Leila Wa Leila (One Thousand and One Nights)',
+    composer: 'Traditional Arabic',
+    duration: '5:15',
+    url: '/audio/alf-leila-wa-leila.mp3',
+    sources: [
+      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/traditional-arabic-oud-meditation/stream/' },
+      { type: 'audio/mpeg', src: '/audio/alf-leila-wa-leila.mp3' }
+    ],
+    performer: 'Traditional Oud Performance',
+    source: 'Free Music Archive',
+    license: 'Public Domain'
+  },
+  {
+    id: 'ney-taksimi',
+    title: 'Ney Taksimi (Improvisation)',
+    composer: 'Traditional Turkish',
+    duration: '4:30',
+    url: '/audio/ney-taksimi.mp3',
+    sources: [
+      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/turkish-ney-meditation/stream/' },
+      { type: 'audio/mpeg', src: '/audio/ney-taksimi.mp3' }
+    ],
+    performer: 'Traditional Ney Performance',
+    source: 'Free Music Archive',
+    license: 'Public Domain'
+  },
+  {
+    id: 'arirang',
+    title: 'Arirang',
+    composer: 'Traditional Korean',
+    duration: '4:00',
+    url: '/audio/arirang-gayageum.mp3',
+    sources: [
+      { type: 'audio/wav', src: 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Gyeonggi_Arirang.wav' },
+      { type: 'audio/mpeg', src: '/audio/arirang-gayageum.mp3' }
+    ],
+    performer: 'Traditional Gayageum Performance',
+    source: 'Wikimedia Commons',
+    license: 'Public Domain'
+  },
+  {
+    id: 'puspanjali',
+    title: 'Puspanjali',
+    composer: 'Traditional Balinese',
+    duration: '7:00',
+    url: '/audio/puspanjali-gamelan.mp3',
+    sources: [
+      { type: 'audio/mpeg', src: 'https://archive.org/download/indonesia-1952-dancers-of-bali-pianton-village/01-puspanjali.mp3' },
+      { type: 'audio/mpeg', src: '/audio/puspanjali-gamelan.mp3' }
+    ],
+    performer: 'Pliatan Gamelan Orchestra',
+    source: 'Archive.org (1952)',
+    license: 'Public Domain'
+  },
+  {
+    id: 'lao-duang-duean',
+    title: 'Lao Duang Duean',
+    composer: 'H.R.H. Prince Benbhadanabhongse (Traditional Thai)',
+    duration: '5:45',
+    url: '/audio/lao-duang-duean.mp3',
+    sources: [
+      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/lao-duang-duean-thai-classical/stream/' },
+      { type: 'audio/mpeg', src: '/audio/lao-duang-duean.mp3' }
+    ],
+    performer: 'Traditional Thai Musicians',
+    source: 'Free Music Archive',
+    license: 'Public Domain'
+  },
+  {
+    id: 'ladrang-wilujeng',
+    title: 'Ladrang Wilujeng',
+    composer: 'Traditional Javanese',
+    duration: '6:30',
+    url: '/audio/ladrang-wilujeng.mp3',
+    sources: [
+      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/javanese-gamelan-wilujeng/stream/' },
+      { type: 'audio/mpeg', src: '/audio/ladrang-wilujeng.mp3' }
+    ],
+    performer: 'Traditional Javanese Gamelan',
+    source: 'Free Music Archive',
+    license: 'Public Domain'
+  }
+];
+
+const musicCollections: MusicCollection[] = [
+  {
+    id: 'western-classical',
+    name: 'Western Classical',
+    tracks: westClassicalTracks
+  },
+  {
+    id: 'worldwide-bedtime',
+    name: 'Worldwide Bedtime',
+    tracks: worldwideBedtimeTracks
+  }
+];
+
 export const MusicPlayer: React.FC = () => {
+  const [currentCollectionIndex, setCurrentCollectionIndex] = useState(0);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.3);
@@ -190,7 +353,8 @@ export const MusicPlayer: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const currentTrack = classicalTracks[currentTrackIndex];
+  const currentCollection = musicCollections[currentCollectionIndex];
+  const currentTrack = currentCollection.tracks[currentTrackIndex];
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -282,20 +446,20 @@ export const MusicPlayer: React.FC = () => {
 
   const nextTrack = () => {
     if (isShuffled) {
-      const randomIndex = Math.floor(Math.random() * classicalTracks.length);
+      const randomIndex = Math.floor(Math.random() * currentCollection.tracks.length);
       setCurrentTrackIndex(randomIndex);
     } else {
-      const nextIndex = (currentTrackIndex + 1) % classicalTracks.length;
+      const nextIndex = (currentTrackIndex + 1) % currentCollection.tracks.length;
       setCurrentTrackIndex(nextIndex);
     }
   };
 
   const previousTrack = () => {
     if (isShuffled) {
-      const randomIndex = Math.floor(Math.random() * classicalTracks.length);
+      const randomIndex = Math.floor(Math.random() * currentCollection.tracks.length);
       setCurrentTrackIndex(randomIndex);
     } else {
-      const prevIndex = currentTrackIndex === 0 ? classicalTracks.length - 1 : currentTrackIndex - 1;
+      const prevIndex = currentTrackIndex === 0 ? currentCollection.tracks.length - 1 : currentTrackIndex - 1;
       setCurrentTrackIndex(prevIndex);
     }
   };
@@ -375,6 +539,27 @@ export const MusicPlayer: React.FC = () => {
             {!localFile && !currentTrack.sources && <source src={currentTrack.url} type="audio/mpeg" />}
           </audio>
           
+          {/* Collection Selector */}
+          <div className="text-center space-y-2">
+            <p className="text-xs text-muted-foreground">Collection</p>
+            <div className="flex justify-center space-x-2">
+              {musicCollections.map((collection, index) => (
+                <Button
+                  key={collection.id}
+                  variant={currentCollectionIndex === index ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => {
+                    setCurrentCollectionIndex(index);
+                    setCurrentTrackIndex(0);
+                  }}
+                  className="text-xs px-3 py-1 h-auto"
+                >
+                  {collection.name}
+                </Button>
+              ))}
+            </div>
+          </div>
+
           {/* Track Info */}
           <div className="text-center space-y-2">
             <h2 className="text-xl font-serif text-foreground leading-tight">{currentTrack.title}</h2>
@@ -537,7 +722,7 @@ export const MusicPlayer: React.FC = () => {
           {/* Status */}
           <div className="text-center">
             <span className="text-xs text-muted-foreground">
-              Track {currentTrackIndex + 1} of {classicalTracks.length}
+              Track {currentTrackIndex + 1} of {currentCollection.tracks.length} • {currentCollection.name}
               {isLooping && !isShuffled && ' • Repeating'}
               {isShuffled && ' • Shuffled'}
             </span>
@@ -546,7 +731,7 @@ export const MusicPlayer: React.FC = () => {
       </Card>
 
       <TrackList
-        tracks={classicalTracks}
+        tracks={currentCollection.tracks}
         currentTrackIndex={currentTrackIndex}
         onTrackSelect={selectTrack}
         isVisible={showTrackList}
