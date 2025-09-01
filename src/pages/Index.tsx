@@ -68,7 +68,7 @@ const Index = () => {
       }}
     >
       <div className="container mx-auto px-4 py-8 max-w-md">
-        <MeditationPrompt />
+        <MeditationPrompt track={musicCollections[currentCollectionIndex].tracks[currentTrackIndex]} />
         
         <div className="space-y-6 mt-8">
           <MusicPlayer 

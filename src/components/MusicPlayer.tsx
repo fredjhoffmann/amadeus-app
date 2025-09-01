@@ -352,9 +352,12 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   const [localFile, setLocalFile] = useState<string | null>(null);
   const [sleepTimer, setSleepTimer] = useState<number | null>(null);
   const [timerActive, setTimerActive] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const currentCollection = musicCollections[currentCollectionIndex];
   const currentTrack = currentCollection.tracks[currentTrackIndex];
@@ -470,6 +473,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
       const nextIndex = (currentTrackIndex + 1) % currentCollection.tracks.length;
       setCurrentTrackIndex(nextIndex);
     }
+    setCurrentTime(0);
   };
 
   const previousTrack = () => {
@@ -480,11 +484,14 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
       const prevIndex = currentTrackIndex === 0 ? currentCollection.tracks.length - 1 : currentTrackIndex - 1;
       setCurrentTrackIndex(prevIndex);
     }
+    setCurrentTime(0);
   };
 
   const selectTrack = (index: number) => {
     setCurrentTrackIndex(index);
     onTrackSelect?.(index);
+    // reset time for new track
+    setCurrentTime(0);
   };
 
   const toggleLoop = () => {
@@ -522,9 +529,26 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     
     // Set new timer
     timerRef.current = setTimeout(() => {
-      if (audioRef.current && isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
+      const audio = audioRef.current;
+      if (audio && isPlaying) {
+        // Smooth fade out over 3 seconds
+        const steps = 15;
+        const totalMs = 3000;
+        const startVol = audio.volume;
+        let count = 0;
+        if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+        fadeIntervalRef.current = setInterval(() => {
+          count += 1;
+          const newVol = Math.max(0, startVol * (1 - count / steps));
+          audio.volume = newVol;
+          if (count >= steps) {
+            clearInterval(fadeIntervalRef.current!);
+            audio.pause();
+            setIsPlaying(false);
+            // restore user volume setting
+            audio.volume = isMuted ? 0 : volume;
+          }
+        }, totalMs / steps);
       }
       setTimerActive(false);
       setSleepTimer(null);
@@ -548,12 +572,14 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
             key={`${currentCollectionIndex}-${currentTrackIndex}`}
             loop={isLooping && !isShuffled}
             onPlay={() => {
-              console.log(`🎵 Playing: ${currentTrack.title} (${currentTrack.url})`);
+              console.log(`🎵 Playing: ${currentTrack.title} (${localFile || currentTrack.url || currentTrack.sources?.[0]?.src || 'n/a'})`);
               setIsPlaying(true);
             }}
             onPause={() => setIsPlaying(false)}
-            onLoadStart={() => console.log(`📥 Loading: ${currentTrack.title} from ${currentTrack.url}`)}
+            onLoadStart={() => console.log(`📥 Loading: ${currentTrack.title} from ${localFile || currentTrack.url || currentTrack.sources?.[0]?.src || 'n/a'}`)}
             onError={(e) => console.error(`❌ Audio error for ${currentTrack.title}:`, e)}
+            onLoadedMetadata={() => setDuration(audioRef.current?.duration || 0)}
+            onTimeUpdate={() => setCurrentTime(audioRef.current?.currentTime || 0)}
             preload="metadata"
             src={localFile || undefined}
           >
@@ -571,7 +597,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
             <p className="text-sm text-muted-foreground">{currentTrack.duration}</p>
             
             {audioError && (
-              <div className="text-xs text-destructive bg-destructive/10 px-3 py-2 rounded border border-destructive/20">
+              <div className="text-xs text-destructive bg-destructive/10 px-3 py-2 rounded border border-destructive/20 animate-fade-in">
                 ⚠️ {audioError}
               </div>
             )}
@@ -638,6 +664,29 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
             </Button>
           </div>
 
+          {/* Progress */}
+          <div className="space-y-1 px-6">
+            <input
+              type="range"
+              min={0}
+              max={Math.max(1, duration)}
+              step={0.1}
+              value={Math.min(currentTime, duration || 0)}
+              onChange={(e) => {
+                const t = parseFloat(e.target.value);
+                if (audioRef.current) {
+                  audioRef.current.currentTime = t;
+                }
+                setCurrentTime(t);
+              }}
+              className="w-full h-1 bg-muted rounded-lg appearance-none cursor-pointer slider"
+            />
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>{`${Math.floor(currentTime / 60)}:${String(Math.floor(currentTime % 60)).padStart(2, '0')}`}</span>
+              <span>{`${Math.floor((duration || 0) / 60)}:${String(Math.floor((duration || 0) % 60)).padStart(2, '0')}`}</span>
+            </div>
+          </div>
+
           {/* Volume Control */}
           <div className="flex items-center justify-center space-x-3">
             <Button
@@ -670,37 +719,37 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
             </div>
           </div>
 
-          {/* Sleep Timer */}
+          {/* Silence Timer */}
           <div className="text-center space-y-2">
-            <p className="text-xs text-muted-foreground">Sleep Timer</p>
+            <p className="text-xs text-muted-foreground">Silence in</p>
             <div className="flex justify-center space-x-2">
               <Button
-                variant={sleepTimer === 1 ? "default" : "ghost"}
+                variant={sleepTimer === 1 ? "secondary" : "ghost"}
                 size="sm"
                 onClick={() => sleepTimer === 1 ? clearSleepTimer() : setSleepTimerMinutes(1)}
-                className="text-xs px-3 py-1 h-auto"
+                className="text-xs px-3 py-1 h-auto hover-scale"
               >
-                1min
+                1 min
               </Button>
               <Button
-                variant={sleepTimer === 5 ? "default" : "ghost"}
+                variant={sleepTimer === 5 ? "secondary" : "ghost"}
                 size="sm"
                 onClick={() => sleepTimer === 5 ? clearSleepTimer() : setSleepTimerMinutes(5)}
-                className="text-xs px-3 py-1 h-auto"
+                className="text-xs px-3 py-1 h-auto hover-scale"
               >
-                5min
+                5 min
               </Button>
               <Button
-                variant={sleepTimer === 15 ? "default" : "ghost"}
+                variant={sleepTimer === 15 ? "secondary" : "ghost"}
                 size="sm"
                 onClick={() => sleepTimer === 15 ? clearSleepTimer() : setSleepTimerMinutes(15)}
-                className="text-xs px-3 py-1 h-auto"
+                className="text-xs px-3 py-1 h-auto hover-scale"
               >
-                15min
+                15 min
               </Button>
             </div>
             {timerActive && (
-              <p className="text-xs text-primary">Timer set for {sleepTimer} minute{sleepTimer !== 1 ? 's' : ''}</p>
+              <p className="text-xs text-primary">Silencing in {sleepTimer} minute{sleepTimer !== 1 ? 's' : ''}</p>
             )}
           </div>
 
