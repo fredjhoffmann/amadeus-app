@@ -70,8 +70,11 @@ export const MusicPlayer: React.FC = () => {
   const [showTrackList, setShowTrackList] = useState(false);
   const [audioError, setAudioError] = useState<string | null>(null);
   const [localFile, setLocalFile] = useState<string | null>(null);
+  const [sleepTimer, setSleepTimer] = useState<number | null>(null);
+  const [timerActive, setTimerActive] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const currentTrack = classicalTracks[currentTrackIndex];
 
@@ -211,6 +214,34 @@ export const MusicPlayer: React.FC = () => {
     }
   };
 
+  const setSleepTimerMinutes = (minutes: number) => {
+    // Clear existing timer
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    
+    setSleepTimer(minutes);
+    setTimerActive(true);
+    
+    // Set new timer
+    timerRef.current = setTimeout(() => {
+      if (audioRef.current && isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+      setTimerActive(false);
+      setSleepTimer(null);
+    }, minutes * 60 * 1000);
+  };
+
+  const clearSleepTimer = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    setSleepTimer(null);
+    setTimerActive(false);
+  };
+
   return (
     <div className="space-y-4">
       <Card className="bg-card/30 border border-border/20 backdrop-blur-sm shadow-card">
@@ -334,6 +365,40 @@ export const MusicPlayer: React.FC = () => {
                 className="w-full h-1 bg-muted rounded-lg appearance-none cursor-pointer slider"
               />
             </div>
+          </div>
+
+          {/* Sleep Timer */}
+          <div className="text-center space-y-2">
+            <p className="text-xs text-muted-foreground">Sleep Timer</p>
+            <div className="flex justify-center space-x-2">
+              <Button
+                variant={sleepTimer === 1 ? "default" : "ghost"}
+                size="sm"
+                onClick={() => sleepTimer === 1 ? clearSleepTimer() : setSleepTimerMinutes(1)}
+                className="text-xs px-3 py-1 h-auto"
+              >
+                1min
+              </Button>
+              <Button
+                variant={sleepTimer === 5 ? "default" : "ghost"}
+                size="sm"
+                onClick={() => sleepTimer === 5 ? clearSleepTimer() : setSleepTimerMinutes(5)}
+                className="text-xs px-3 py-1 h-auto"
+              >
+                5min
+              </Button>
+              <Button
+                variant={sleepTimer === 15 ? "default" : "ghost"}
+                size="sm"
+                onClick={() => sleepTimer === 15 ? clearSleepTimer() : setSleepTimerMinutes(15)}
+                className="text-xs px-3 py-1 h-auto"
+              >
+                15min
+              </Button>
+            </div>
+            {timerActive && (
+              <p className="text-xs text-primary">Timer set for {sleepTimer} minute{sleepTimer !== 1 ? 's' : ''}</p>
+            )}
           </div>
 
           {/* Local File Upload */}

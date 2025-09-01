@@ -111,32 +111,30 @@ export const MeditationPrompt: React.FC = () => {
   }, []);
 
   return (
-    <Card className="bg-card/20 border border-border/10 backdrop-blur-sm shadow-card">
-      <div className="p-6 space-y-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-serif text-foreground">Peaceful Reflection</h3>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={getRandomPrompt}
-            className="text-muted-foreground hover:text-foreground opacity-60 hover:opacity-100"
-          >
-            <RefreshCw className="h-4 w-4" />
-          </Button>
-        </div>
-        
-        <div className="min-h-[80px] flex items-center">
-          <p className="text-muted-foreground font-serif italic leading-relaxed text-center">
+    <div className="text-center space-y-6 mb-8">
+      <div className="space-y-4">
+        <div className="min-h-[100px] flex items-center justify-center">
+          <p className="text-xl font-serif italic leading-relaxed text-foreground/90 px-4">
             "{currentPrompt}"
           </p>
         </div>
         
-        <div className="text-center">
-          <p className="text-xs text-muted-foreground/60">
-            Tap the refresh icon for a new reflection
+        <div className="flex items-center justify-center space-x-4">
+          <p className="text-sm text-muted-foreground font-serif">
+            — A moment of reflection
           </p>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={getRandomPrompt}
+            className="text-muted-foreground hover:text-foreground opacity-60 hover:opacity-100 h-8 w-8 p-0"
+          >
+            <RefreshCw className="h-3 w-3" />
+          </Button>
         </div>
       </div>
-    </Card>
+      
+      <div className="w-24 h-px bg-gradient-primary mx-auto opacity-60"></div>
+    </div>
   );
 };

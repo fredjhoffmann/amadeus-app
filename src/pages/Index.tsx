@@ -19,11 +19,10 @@ const Index = () => {
       }}
     >
       <div className="container mx-auto px-4 py-8 max-w-md">
-        <Header />
+        <MeditationPrompt />
         
-        <div className="space-y-6">
+        <div className="space-y-6 mt-8">
           <MusicPlayer />
-          <MeditationPrompt />
           <PhysicalControls 
             onActionButtonPress={() => {
               // This will be handled by the MusicPlayer component's event listeners
