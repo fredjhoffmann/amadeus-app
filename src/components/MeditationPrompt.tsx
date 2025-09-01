@@ -101,10 +101,7 @@ export const MeditationPrompt: React.FC<{ track?: TrackLite }> = ({ track }) => 
           </p>
         </div>
         
-        <div className="flex items-center justify-center space-x-4">
-          <p className="text-sm text-muted-foreground font-serif">
-            — A moment of reflection for {track?.title || 'this piece'}
-          </p>
+        <div className="flex items-center justify-center">
           <Button
             variant="ghost"
             size="sm"

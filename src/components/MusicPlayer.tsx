@@ -374,12 +374,19 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
           {/* Secondary Controls */}
           <div className="flex items-center justify-center space-x-4">
             <Button
-              variant="ghost"
+              variant={isLooping ? "default" : "ghost"}
               size="sm"
               onClick={toggleLoop}
-              className={`text-muted-foreground hover:text-foreground ${isLooping ? 'text-primary' : ''}`}
+              className={`transition-all duration-200 ${
+                isLooping 
+                  ? 'text-primary-foreground bg-primary hover:bg-primary/90' 
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+              aria-pressed={isLooping}
+              aria-label={isLooping ? "Disable repeat" : "Enable repeat"}
             >
-              <Repeat className="h-4 w-4" />
+              <Repeat className="h-4 w-4 mr-1" />
+              <span className="text-xs">{isLooping ? 'ON' : 'OFF'}</span>
             </Button>
           </div>
 

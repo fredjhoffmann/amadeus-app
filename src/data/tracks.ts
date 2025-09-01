@@ -116,7 +116,7 @@ const worldwideTracks: Track[] = [
 export const musicCollections: MusicCollection[] = [
   {
     id: "classical",
-    name: "Classical Piano",
+    name: "Western Bedtime",
     tracks: classicalTracks
   },
   {

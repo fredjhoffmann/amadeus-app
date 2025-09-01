@@ -7,15 +7,15 @@ import { TrackList } from '@/components/TrackList';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import heroBackground from '@/assets/hero-background.jpg';
+import bedtimePeaceful from '@/assets/bedtime-peaceful.jpg';
+import classicalPianoAmbient from '@/assets/classical-piano-ambient.jpg';
+import japaneseGardenKoto from '@/assets/japanese-garden-koto.jpg';
 import { musicCollections } from '@/data/tracks';
 
 const Index = () => {
   const [currentCollectionIndex, setCurrentCollectionIndex] = React.useState(0);
   const [currentTrackIndex, setCurrentTrackIndex] = React.useState(0);
   
-  // Collections are now imported from a shared data module
-
-
   const handleCollectionChange = (index: number) => {
     setCurrentCollectionIndex(index);
     setCurrentTrackIndex(0);
@@ -24,11 +24,25 @@ const Index = () => {
   const handleTrackSelect = (index: number) => {
     setCurrentTrackIndex(index);
   };
+
+  // Get reactive background image based on current track
+  const getBackgroundImage = () => {
+    const currentTrack = musicCollections[currentCollectionIndex].tracks[currentTrackIndex];
+    
+    // Map specific tracks to themed backgrounds
+    if (currentTrack?.id?.includes('koto') || currentTrack?.composer?.includes('Japanese')) {
+      return japaneseGardenKoto;
+    } else if (currentCollectionIndex === 0) { // Western Bedtime collection
+      return classicalPianoAmbient;
+    } else {
+      return bedtimePeaceful;
+    }
+  };
   return (
     <div 
-      className="min-h-screen bg-gradient-background"
+      className="min-h-screen bg-gradient-background transition-all duration-1000 ease-in-out"
       style={{
-        backgroundImage: `linear-gradient(rgba(34, 31, 70, 0.85), rgba(26, 23, 61, 0.95)), url(${heroBackground})`,
+        backgroundImage: `linear-gradient(rgba(34, 31, 70, 0.85), rgba(26, 23, 61, 0.95)), url(${getBackgroundImage()})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed'
