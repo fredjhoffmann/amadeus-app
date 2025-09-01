@@ -10,6 +10,10 @@ interface Track {
   composer: string;
   duration: string;
   url: string;
+  sources?: { type: string; src: string }[];
+  performer?: string;
+  source?: string;
+  license?: string;
 }
 
 const classicalTracks: Track[] = [
@@ -18,21 +22,40 @@ const classicalTracks: Track[] = [
     title: 'Clair de Lune',
     composer: 'Claude Debussy',
     duration: '5:03',
-    url: '/audio/debussy-clair-de-lune.mp3' // Ready for real audio file
+    url: '/audio/debussy-clair-de-lune.m4a',
+    sources: [
+      { type: 'audio/m4a', src: '/audio/debussy-clair-de-lune.m4a' },
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
+    ],
+    performer: 'User Upload',
+    source: 'Personal Collection',
+    license: 'Personal Use'
   },
   {
     id: 'chopin-nocturne',
     title: 'Nocturne in E-flat major, Op. 9, No. 2',
     composer: 'Frédéric Chopin',
     duration: '4:30',
-    url: '/audio/chopin-nocturne-op9-no2.mp3' // Ready for real audio file
+    url: '/audio/chopin-nocturne-op9-no2.mp3',
+    sources: [
+      { type: 'audio/mpeg', src: '/audio/chopin-nocturne-op9-no2.mp3' }
+    ],
+    performer: 'Pixabay Artist',
+    source: 'Pixabay.com',
+    license: 'Royalty-free'
   },
   {
     id: 'satie-gymnopedie',
     title: 'Gymnopédie No. 1',
     composer: 'Erik Satie',
     duration: '3:33',
-    url: '/audio/satie-gymnopedie-1.mp3' // Ready for real audio file
+    url: '/audio/satie-gymnopedie-1.mp3',
+    sources: [
+      { type: 'audio/mpeg', src: '/audio/satie-gymnopedie-1.mp3' }
+    ],
+    performer: 'Pixabay Artist',
+    source: 'Pixabay.com',
+    license: 'Royalty-free'
   }
 ];
 
@@ -179,12 +202,17 @@ export const MusicPlayer: React.FC = () => {
         <div className="p-6 space-y-6">
           <audio
             ref={audioRef}
-            src={currentTrack.url}
             loop={isLooping && !isShuffled}
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
             preload="metadata"
-          />
+          >
+            {currentTrack.sources?.map((source, index) => (
+              <source key={index} src={source.src} type={source.type} />
+            ))}
+            {/* Fallback for tracks without sources array */}
+            {!currentTrack.sources && <source src={currentTrack.url} type="audio/mpeg" />}
+          </audio>
           
           {/* Track Info */}
           <div className="text-center space-y-2">
