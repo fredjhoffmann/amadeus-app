@@ -33,7 +33,7 @@ const classicalTracks: Track[] = [
     license: 'Public Radio Download'
   },
   {
-    id: 'chopin-nocturne',
+    id: 'chopin-nocturne-op9',
     title: 'Nocturne in E-flat major, Op. 9, No. 2',
     composer: 'Frédéric Chopin',
     duration: '4:30',
@@ -58,6 +58,118 @@ const classicalTracks: Track[] = [
     ],
     performer: 'Public Domain Performance',
     source: 'Wikimedia Commons',
+    license: 'Public Domain'
+  },
+  {
+    id: 'chopin-nocturne-cs-minor',
+    title: 'Nocturne in C-sharp minor, Op. Posth.',
+    composer: 'Frédéric Chopin',
+    duration: '4:45',
+    url: '/audio/chopin-nocturne-cs-minor.mp3',
+    sources: [
+      { type: 'audio/ogg', src: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Frederic_Chopin_-_Nocturne_in_C-sharp_minor.ogg' },
+      { type: 'audio/mpeg', src: '/audio/chopin-nocturne-cs-minor.mp3' }
+    ],
+    performer: 'Randolph Hokanson',
+    source: 'Wikimedia Commons',
+    license: 'Public Domain'
+  },
+  {
+    id: 'debussy-reverie',
+    title: 'Rêverie, L. 68',
+    composer: 'Claude Debussy',
+    duration: '4:20',
+    url: '/audio/debussy-reverie.mp3',
+    sources: [
+      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/debussy-reverie/stream/' },
+      { type: 'audio/mpeg', src: '/audio/debussy-reverie.mp3' }
+    ],
+    performer: 'Public Domain Performance',
+    source: 'Free Music Archive',
+    license: 'Public Domain'
+  },
+  {
+    id: 'schumann-traumerei',
+    title: 'Träumerei, Op. 15 No. 7',
+    composer: 'Robert Schumann',
+    duration: '2:30',
+    url: '/audio/schumann-traumerei.mp3',
+    sources: [
+      { type: 'audio/ogg', src: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Schumann_Traumerei.ogg' },
+      { type: 'audio/mpeg', src: '/audio/schumann-traumerei.mp3' }
+    ],
+    performer: 'Public Domain Performance',
+    source: 'Wikimedia Commons',
+    license: 'Public Domain'
+  },
+  {
+    id: 'ravel-pavane',
+    title: 'Pavane pour une infante défunte',
+    composer: 'Maurice Ravel',
+    duration: '6:30',
+    url: '/audio/ravel-pavane.mp3',
+    sources: [
+      { type: 'audio/ogg', src: 'https://upload.wikimedia.org/wikipedia/commons/d/d0/Maurice_Ravel_-_Pavane_pour_une_infante_defunte.ogg' },
+      { type: 'audio/mpeg', src: '/audio/ravel-pavane.mp3' }
+    ],
+    performer: 'Vadim Chaimovich',
+    source: 'Wikimedia Commons',
+    license: 'Public Domain'
+  },
+  {
+    id: 'field-nocturne-5',
+    title: 'Nocturne No. 5 in B-flat major',
+    composer: 'John Field',
+    duration: '4:15',
+    url: '/audio/field-nocturne-5.mp3',
+    sources: [
+      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/john-field-nocturne-no-5/stream/' },
+      { type: 'audio/mpeg', src: '/audio/field-nocturne-5.mp3' }
+    ],
+    performer: 'Public Domain Performance',
+    source: 'Free Music Archive',
+    license: 'Public Domain'
+  },
+  {
+    id: 'liszt-consolation-3',
+    title: 'Consolation No. 3 in D-flat major',
+    composer: 'Franz Liszt',
+    duration: '4:00',
+    url: '/audio/liszt-consolation-3.mp3',
+    sources: [
+      { type: 'audio/ogg', src: 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Liszt_consolation_3_db.ogg' },
+      { type: 'audio/mpeg', src: '/audio/liszt-consolation-3.mp3' }
+    ],
+    performer: 'Martha Goldstein',
+    source: 'Wikimedia Commons',
+    license: 'Public Domain'
+  },
+  {
+    id: 'beethoven-moonlight',
+    title: 'Moonlight Sonata (1st Movement), Op. 27 No. 2',
+    composer: 'Ludwig van Beethoven',
+    duration: '5:30',
+    url: '/audio/beethoven-moonlight.mp3',
+    sources: [
+      { type: 'audio/ogg', src: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Ludwig_van_Beethoven_-_sonata_no._14_in_c_sharp_minor_%27moonlight%27%2C_op._27_no._2_-_i._adagio_sostenuto.ogg' },
+      { type: 'audio/mpeg', src: '/audio/beethoven-moonlight.mp3' }
+    ],
+    performer: 'Paul Pitman',
+    source: 'Wikimedia Commons',
+    license: 'Public Domain'
+  },
+  {
+    id: 'mendelssohn-song-without-words',
+    title: 'Song Without Words, Op. 30 No. 6 (Venetian Boat Song)',
+    composer: 'Felix Mendelssohn',
+    duration: '2:45',
+    url: '/audio/mendelssohn-song-without-words.mp3',
+    sources: [
+      { type: 'audio/mpeg', src: 'https://freemusicarchive.org/track/mendelssohn-venetian-boat-song-op-30-no-6/stream/' },
+      { type: 'audio/mpeg', src: '/audio/mendelssohn-song-without-words.mp3' }
+    ],
+    performer: 'Gregor Quendel',
+    source: 'Free Music Archive',
     license: 'Public Domain'
   }
 ];
