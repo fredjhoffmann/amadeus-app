@@ -41,11 +41,11 @@ const westClassicalTracks: Track[] = [
     title: 'Nocturne in E-flat major, Op. 9, No. 2',
     composer: 'Frédéric Chopin',
     duration: '4:30',
-    url: '/audio/chopin-nocturne-op9-no2.mp3',
+    url: '/audio/chopin-nocturne-op9-no2.ogg',
     sources: [
-      { type: 'audio/mpeg', src: '/audio/chopin-nocturne-op9-no2.mp3' }
+      { type: 'audio/ogg', src: '/audio/chopin-nocturne-op9-no2.ogg' }
     ],
-    performer: 'Public Domain Performance',
+    performer: 'Wikimedia Commons Performance',
     source: 'Wikimedia Commons',
     license: 'Public Domain'
   },
@@ -84,8 +84,8 @@ const westClassicalTracks: Track[] = [
     sources: [
       { type: 'audio/mpeg', src: '/audio/debussy-reverie.mp3' }
     ],
-    performer: 'Public Domain Performance',
-    source: 'Classical Music Archive',
+    performer: 'Archive.org Performance',
+    source: 'Archive.org (Debussy Collection)',
     license: 'Public Domain'
   },
   {
@@ -547,8 +547,13 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
             ref={audioRef}
             key={`${currentCollectionIndex}-${currentTrackIndex}`}
             loop={isLooping && !isShuffled}
-            onPlay={() => setIsPlaying(true)}
+            onPlay={() => {
+              console.log(`🎵 Playing: ${currentTrack.title} (${currentTrack.url})`);
+              setIsPlaying(true);
+            }}
             onPause={() => setIsPlaying(false)}
+            onLoadStart={() => console.log(`📥 Loading: ${currentTrack.title} from ${currentTrack.url}`)}
+            onError={(e) => console.error(`❌ Audio error for ${currentTrack.title}:`, e)}
             preload="metadata"
             src={localFile || undefined}
           >
