@@ -16,12 +16,14 @@ export const Attribution: React.FC = () => {
           
           <div>
             <p className="font-medium">Chopin - Nocturne Op. 9, No. 2</p>
-            <p>Source: Pixabay.com • License: Royalty-free</p>
+            <p>Performer: Denes Varjon • Source: YourClassical.org</p>
+            <p className="text-muted-foreground/60">Available: <a href="https://download.stream.publicradio.org/podcast/minnesota/classical/programs/free-downloads/2016/02/04/daily_download_20160204_128.mp3" target="_blank" rel="noopener" className="underline hover:text-primary">Direct Download</a></p>
           </div>
           
           <div>
             <p className="font-medium">Satie - Gymnopédie No. 1</p>
-            <p>Source: Pixabay.com • License: Royalty-free</p>
+            <p>Source: Wikimedia Commons • License: Public Domain</p>
+            <p className="text-muted-foreground/60">Available: <a href="https://upload.wikimedia.org/wikipedia/commons/2/2e/Satie_Gymnopedie_No_1.ogg" target="_blank" rel="noopener" className="underline hover:text-primary">Direct Download</a></p>
           </div>
         </div>
         

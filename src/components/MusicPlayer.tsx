@@ -39,11 +39,12 @@ const classicalTracks: Track[] = [
     duration: '4:30',
     url: '/audio/chopin-nocturne-op9-no2.mp3',
     sources: [
+      { type: 'audio/mpeg', src: 'https://download.stream.publicradio.org/podcast/minnesota/classical/programs/free-downloads/2016/02/04/daily_download_20160204_128.mp3' },
       { type: 'audio/mpeg', src: '/audio/chopin-nocturne-op9-no2.mp3' }
     ],
-    performer: 'Pixabay Artist',
-    source: 'Pixabay.com',
-    license: 'Royalty-free'
+    performer: 'Denes Varjon',
+    source: 'YourClassical.org (Capriccio)',
+    license: 'Public Radio Download'
   },
   {
     id: 'satie-gymnopedie',
@@ -52,11 +53,12 @@ const classicalTracks: Track[] = [
     duration: '3:33',
     url: '/audio/satie-gymnopedie-1.mp3',
     sources: [
+      { type: 'audio/ogg', src: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Satie_Gymnopedie_No_1.ogg' },
       { type: 'audio/mpeg', src: '/audio/satie-gymnopedie-1.mp3' }
     ],
-    performer: 'Pixabay Artist',
-    source: 'Pixabay.com',
-    license: 'Royalty-free'
+    performer: 'Public Domain Performance',
+    source: 'Wikimedia Commons',
+    license: 'Public Domain'
   }
 ];
 
