@@ -162,10 +162,9 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     }
   };
 
-  const nextTrack = () => {
-    console.log('🚀 Next track requested');
-    wasPlayingRef.current = isPlaying;
-    autoPlayNextRef.current = isPlaying;
+  const nextTrack = (autoplay: boolean = false) => {
+    console.log('🚀 Next track requested, autoplay:', autoplay);
+    autoPlayNextRef.current = autoplay;
     const nextIndex = (currentTrackIndex + 1) % currentCollection.tracks.length;
     setCurrentTrackIndex(nextIndex);
     setCurrentTime(0);
@@ -280,8 +279,8 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
                   });
                 }
               } else {
-                console.log('➡️ Advancing to next track');
-                nextTrack();
+                console.log('➡️ Advancing to next track with autoplay');
+                nextTrack(true);
               }
             }}
             onError={(e) => {
@@ -293,11 +292,10 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
               console.log(`✅ Can play: ${currentTrack.title}`);
               setAudioError(null);
               
-              // Auto-play if requested
-              if (autoPlayNextRef.current || wasPlayingRef.current) {
+              // Auto-play if explicitly requested
+              if (autoPlayNextRef.current) {
                 console.log('🎬 Auto-playing after load');
                 autoPlayNextRef.current = false;
-                wasPlayingRef.current = false;
                 
                 audioRef.current?.play().catch(err => {
                   console.error('Auto-play failed:', err);
@@ -366,7 +364,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
             <Button
               variant="minimal"
               size="icon"
-              onClick={nextTrack}
+              onClick={() => nextTrack(true)}
               className="rounded-full"
             >
               <SkipForward className="h-5 w-5" />
