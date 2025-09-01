@@ -22,14 +22,14 @@ const classicalTracks: Track[] = [
     title: 'Clair de Lune',
     composer: 'Claude Debussy',
     duration: '5:03',
-    url: '/audio/debussy-clair-de-lune.m4a',
+    url: '/audio/debussy-clair-de-lune.mp3',
     sources: [
-      { type: 'audio/m4a', src: '/audio/debussy-clair-de-lune.m4a' },
-      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-clair-de-lune.mp3' },
+      { type: 'audio/m4a', src: '/audio/debussy-clair-de-lune.m4a' }
     ],
-    performer: 'User Upload',
-    source: 'Personal Collection',
-    license: 'Personal Use'
+    performer: 'François-Joël Thiollier',
+    source: 'YourClassical.org (Naxos)',
+    license: 'Public Radio Download'
   },
   {
     id: 'chopin-nocturne',
