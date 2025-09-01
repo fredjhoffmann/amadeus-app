@@ -11,7 +11,7 @@ export const Header: React.FC = () => {
           Classical music & meditation for peaceful bedtime moments
         </p>
         <p className="text-xs text-muted-foreground/60 mt-2">
-          22 carefully curated pieces • 70+ meditation prompts
+          Demo version • 3 tracks ready • Add classical audio files for full experience
         </p>
       </div>
       

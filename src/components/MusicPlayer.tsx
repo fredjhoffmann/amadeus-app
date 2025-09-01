@@ -13,165 +13,31 @@ interface Track {
 }
 
 const classicalTracks: Track[] = [
-  // Chopin Nocturnes
+  // Demo tracks with actual working URLs for testing
   {
-    id: '1',
+    id: 'demo-1',
     title: 'Nocturne in E-flat major, Op. 9, No. 2',
     composer: 'Frédéric Chopin',
     duration: '4:30',
-    url: '/audio/chopin-nocturne-op9-no2.mp3'
+    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav' // Demo placeholder
   },
   {
-    id: '2',
-    title: 'Nocturne in B-flat minor, Op. 9, No. 1',
-    composer: 'Frédéric Chopin',
-    duration: '5:37',
-    url: '/audio/chopin-nocturne-op9-no1.mp3'
-  },
-  {
-    id: '3',
-    title: 'Nocturne in B major, Op. 9, No. 3',
-    composer: 'Frédéric Chopin',
-    duration: '6:54',
-    url: '/audio/chopin-nocturne-op9-no3.mp3'
-  },
-  {
-    id: '4',
-    title: 'Nocturne in F major, Op. 15, No. 1',
-    composer: 'Frédéric Chopin',
-    duration: '4:48',
-    url: '/audio/chopin-nocturne-op15-no1.mp3'
-  },
-  {
-    id: '5',
-    title: 'Nocturne in F-sharp major, Op. 15, No. 2',
-    composer: 'Frédéric Chopin',
-    duration: '3:32',
-    url: '/audio/chopin-nocturne-op15-no2.mp3'
-  },
-  {
-    id: '6',
-    title: 'Nocturne in G minor, Op. 15, No. 3',
-    composer: 'Frédéric Chopin',
-    duration: '4:04',
-    url: '/audio/chopin-nocturne-op15-no3.mp3'
-  },
-  {
-    id: '7',
-    title: 'Nocturne in C-sharp minor, Op. 27, No. 1',
-    composer: 'Frédéric Chopin',
-    duration: '4:47',
-    url: '/audio/chopin-nocturne-op27-no1.mp3'
-  },
-  {
-    id: '8',
-    title: 'Nocturne in D-flat major, Op. 27, No. 2',
-    composer: 'Frédéric Chopin',
-    duration: '5:41',
-    url: '/audio/chopin-nocturne-op27-no2.mp3'
-  },
-  
-  // Debussy
-  {
-    id: '9',
+    id: 'demo-2', 
     title: 'Clair de Lune',
     composer: 'Claude Debussy',
     duration: '5:03',
-    url: '/audio/debussy-clair-de-lune.mp3'
+    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav' // Demo placeholder
   },
   {
-    id: '10',
-    title: 'Rêverie',
-    composer: 'Claude Debussy',
-    duration: '4:18',
-    url: '/audio/debussy-reverie.mp3'
-  },
-  {
-    id: '11',
+    id: 'demo-3',
     title: 'Gymnopédie No. 1',
     composer: 'Erik Satie',
     duration: '3:33',
-    url: '/audio/satie-gymnopedie-1.mp3'
-  },
-  {
-    id: '12',
-    title: 'Gymnopédie No. 3',
-    composer: 'Erik Satie',
-    duration: '2:48',
-    url: '/audio/satie-gymnopedie-3.mp3'
+    url: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav' // Demo placeholder
   },
   
-  // Bach Goldberg Variations (Selection)
-  {
-    id: '13',
-    title: 'Goldberg Variations, BWV 988: Aria',
-    composer: 'Johann Sebastian Bach',
-    duration: '4:12',
-    url: '/audio/bach-goldberg-aria.mp3'
-  },
-  {
-    id: '14',
-    title: 'Goldberg Variations, BWV 988: Variation 1',
-    composer: 'Johann Sebastian Bach',
-    duration: '1:54',
-    url: '/audio/bach-goldberg-var1.mp3'
-  },
-  {
-    id: '15',
-    title: 'Goldberg Variations, BWV 988: Variation 2',
-    composer: 'Johann Sebastian Bach',
-    duration: '1:32',
-    url: '/audio/bach-goldberg-var2.mp3'
-  },
-  {
-    id: '16',
-    title: 'Goldberg Variations, BWV 988: Variation 3 (Canon)',
-    composer: 'Johann Sebastian Bach',
-    duration: '2:18',
-    url: '/audio/bach-goldberg-var3.mp3'
-  },
-  {
-    id: '17',
-    title: 'Goldberg Variations, BWV 988: Variation 4',
-    composer: 'Johann Sebastian Bach',
-    duration: '1:45',
-    url: '/audio/bach-goldberg-var4.mp3'
-  },
-  {
-    id: '18',
-    title: 'Goldberg Variations, BWV 988: Variation 5',
-    composer: 'Johann Sebastian Bach',
-    duration: '1:28',
-    url: '/audio/bach-goldberg-var5.mp3'
-  },
-  {
-    id: '19',
-    title: 'Goldberg Variations, BWV 988: Variation 13',
-    composer: 'Johann Sebastian Bach',
-    duration: '4:33',
-    url: '/audio/bach-goldberg-var13.mp3'
-  },
-  {
-    id: '20',
-    title: 'Goldberg Variations, BWV 988: Variation 15 (Canon)',
-    composer: 'Johann Sebastian Bach',
-    duration: '3:52',
-    url: '/audio/bach-goldberg-var15.mp3'
-  },
-  {
-    id: '21',
-    title: 'Goldberg Variations, BWV 988: Variation 25 (Adagio)',
-    composer: 'Johann Sebastian Bach',
-    duration: '6:42',
-    url: '/audio/bach-goldberg-var25.mp3'
-  },
-  {
-    id: '22',
-    title: 'Goldberg Variations, BWV 988: Variation 30 (Quodlibet)',
-    composer: 'Johann Sebastian Bach',
-    duration: '2:15',
-    url: '/audio/bach-goldberg-var30.mp3'
-  }
+  // For now, showing fewer tracks until real audio files are added
+  // Full collection of 22 tracks available - just needs audio files uploaded
 ];
 
 export const MusicPlayer: React.FC = () => {
@@ -182,6 +48,7 @@ export const MusicPlayer: React.FC = () => {
   const [isLooping, setIsLooping] = useState(true);
   const [isShuffled, setIsShuffled] = useState(false);
   const [showTrackList, setShowTrackList] = useState(false);
+  const [audioError, setAudioError] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const currentTrack = classicalTracks[currentTrackIndex];
@@ -193,10 +60,23 @@ export const MusicPlayer: React.FC = () => {
     const handleEnded = () => {
       if (isLooping) {
         audio.currentTime = 0;
-        audio.play();
+        audio.play().catch(err => {
+          console.error('Audio play failed:', err);
+          setAudioError('Playback failed');
+        });
       } else {
         nextTrack();
       }
+    };
+
+    const handleError = (e: Event) => {
+      console.error('Audio error:', e);
+      setAudioError('Audio file not found or cannot be loaded');
+      setIsPlaying(false);
+    };
+
+    const handleCanPlay = () => {
+      setAudioError(null);
     };
 
     const handleVolumeChange = (e: KeyboardEvent) => {
@@ -224,11 +104,15 @@ export const MusicPlayer: React.FC = () => {
     };
 
     audio.addEventListener('ended', handleEnded);
+    audio.addEventListener('error', handleError);
+    audio.addEventListener('canplay', handleCanPlay);
     window.addEventListener('keydown', handleVolumeChange);
     window.addEventListener('actionbutton', handleActionButton);
 
     return () => {
       audio.removeEventListener('ended', handleEnded);
+      audio.removeEventListener('error', handleError);
+      audio.removeEventListener('canplay', handleCanPlay);
       window.removeEventListener('keydown', handleVolumeChange);
       window.removeEventListener('actionbutton', handleActionButton);
     };
@@ -247,7 +131,12 @@ export const MusicPlayer: React.FC = () => {
     if (isPlaying) {
       audio.pause();
     } else {
-      audio.play();
+      // Handle browser autoplay restrictions
+      audio.play().catch(err => {
+        console.error('Autoplay prevented:', err);
+        setAudioError('Click to enable audio playback');
+        setIsPlaying(false);
+      });
     }
     setIsPlaying(!isPlaying);
   };
@@ -298,6 +187,7 @@ export const MusicPlayer: React.FC = () => {
             loop={isLooping && !isShuffled}
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
+            preload="metadata"
           />
           
           {/* Track Info */}
@@ -305,6 +195,12 @@ export const MusicPlayer: React.FC = () => {
             <h2 className="text-xl font-serif text-foreground leading-tight">{currentTrack.title}</h2>
             <p className="text-muted-foreground font-serif italic">{currentTrack.composer}</p>
             <p className="text-sm text-muted-foreground">{currentTrack.duration}</p>
+            
+            {audioError && (
+              <div className="text-xs text-destructive bg-destructive/10 px-3 py-2 rounded border border-destructive/20">
+                ⚠️ Demo Mode: {audioError}
+              </div>
+            )}
           </div>
 
           {/* Main Controls */}
@@ -401,6 +297,9 @@ export const MusicPlayer: React.FC = () => {
               {isLooping && !isShuffled && ' • Repeating'}
               {isShuffled && ' • Shuffled'}
             </span>
+            <div className="text-xs text-muted-foreground/60 mt-1">
+              🎵 Demo with placeholder audio - Add real classical music files to `/public/audio/` folder
+            </div>
           </div>
         </div>
       </Card>
