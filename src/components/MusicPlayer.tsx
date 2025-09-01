@@ -351,6 +351,19 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
 }) => {
   const [currentCollectionIndex, setCurrentCollectionIndex] = useState(externalCollectionIndex || 0);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(externalTrackIndex || 0);
+
+  // Sync with external props
+  React.useEffect(() => {
+    if (externalCollectionIndex !== undefined) {
+      setCurrentCollectionIndex(externalCollectionIndex);
+    }
+  }, [externalCollectionIndex]);
+
+  React.useEffect(() => {
+    if (externalTrackIndex !== undefined) {
+      setCurrentTrackIndex(externalTrackIndex);
+    }
+  }, [externalTrackIndex]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.3);
   const [isMuted, setIsMuted] = useState(false);

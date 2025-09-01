@@ -3,8 +3,9 @@ import { MusicPlayer } from '@/components/MusicPlayer';
 import { MeditationPrompt } from '@/components/MeditationPrompt';
 import { PhysicalControls } from '@/components/PhysicalControls';
 import { Attribution } from '@/components/Attribution';
-import { CollectionSelector } from '@/components/CollectionSelector';
 import { TrackList } from '@/components/TrackList';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import heroBackground from '@/assets/hero-background.jpg';
 
 const Index = () => {
@@ -70,13 +71,35 @@ const Index = () => {
         <MeditationPrompt />
         
         <div className="space-y-6 mt-8">
-          <MusicPlayer />
-          
-          <CollectionSelector
-            collections={musicCollections}
+          <MusicPlayer 
             currentCollectionIndex={currentCollectionIndex}
+            currentTrackIndex={currentTrackIndex}
             onCollectionChange={handleCollectionChange}
+            onTrackSelect={handleTrackSelect}
           />
+          
+          {/* Collection Selector Buttons */}
+          <Card className="bg-card/20 border border-border/10 backdrop-blur-sm">
+            <div className="p-4 space-y-3">
+              <p className="text-sm text-muted-foreground text-center">Music Collection</p>
+              <div className="flex justify-center space-x-3">
+                {musicCollections.map((collection, index) => (
+                  <Button
+                    key={collection.id}
+                    variant={currentCollectionIndex === index ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => handleCollectionChange(index)}
+                    className="text-sm px-4 py-2"
+                  >
+                    {collection.name}
+                  </Button>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground/60 text-center">
+                {musicCollections[currentCollectionIndex].tracks.length} tracks available
+              </p>
+            </div>
+          </Card>
           
           <TrackList
             tracks={musicCollections[currentCollectionIndex].tracks}
