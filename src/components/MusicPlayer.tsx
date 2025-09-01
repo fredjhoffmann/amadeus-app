@@ -62,6 +62,22 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   const currentTrack = currentCollection.tracks[currentTrackIndex];
 
 
+  // Load audio sources when track changes
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    console.log(`🔄 Loading track: ${currentTrack.title}`);
+    console.log(`📂 Available sources:`, currentTrack.sources || []);
+    console.log(`🔗 URL fallback:`, currentTrack.url);
+    
+    setAudioError(null);
+    setIsPlaying(false);
+    
+    // Load the new track
+    audio.load();
+  }, [currentTrackIndex, currentCollectionIndex, currentTrack]);
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -79,13 +95,21 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     };
 
     const handleError = (e: Event) => {
-      console.error('Audio error:', e);
-      setAudioError('Audio file not found or cannot be loaded');
+      console.error('Audio error for track:', currentTrack.title, e);
+      const audio = e.target as HTMLAudioElement;
+      console.log('Failed source:', audio.currentSrc);
+      setAudioError(`Cannot load "${currentTrack.title}" - file may be missing or corrupted`);
       setIsPlaying(false);
     };
 
     const handleCanPlay = () => {
+      console.log(`✅ Can play: ${currentTrack.title} from ${audioRef.current?.currentSrc}`);
       setAudioError(null);
+    };
+
+    const handleLoadedData = () => {
+      console.log(`📊 Loaded data for: ${currentTrack.title}`);
+      setDuration(audio.duration || 0);
     };
 
     const handleVolumeChange = (e: KeyboardEvent) => {
@@ -115,6 +139,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     audio.addEventListener('ended', handleEnded);
     audio.addEventListener('error', handleError);
     audio.addEventListener('canplay', handleCanPlay);
+    audio.addEventListener('loadeddata', handleLoadedData);
     window.addEventListener('keydown', handleVolumeChange);
     window.addEventListener('actionbutton', handleActionButton);
 
@@ -122,6 +147,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
       audio.removeEventListener('ended', handleEnded);
       audio.removeEventListener('error', handleError);
       audio.removeEventListener('canplay', handleCanPlay);
+      audio.removeEventListener('loadeddata', handleLoadedData);
       window.removeEventListener('keydown', handleVolumeChange);
       window.removeEventListener('actionbutton', handleActionButton);
     };
@@ -133,36 +159,48 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     }
   }, [volume, isMuted]);
 
-  const togglePlayPause = () => {
+  const togglePlayPause = async () => {
     const audio = audioRef.current;
     if (!audio) return;
 
     if (isPlaying) {
       audio.pause();
+      setIsPlaying(false);
     } else {
-      // Handle browser autoplay restrictions and other playback issues
-      setAudioError(null);
-      // Ensure sources are (re)loaded before play
-      try { audio.load(); } catch {}
-      // Small delay to prevent AbortError when switching tracks rapidly
-      setTimeout(() => {
-        if (audioRef.current) {
-          audioRef.current.play().catch(err => {
-            console.error('Playback error:', err);
-            const name = (err as any)?.name || '';
-            if (name === 'NotAllowedError') {
-              setAudioError('Click to enable audio playback');
-            } else if (name === 'AbortError') {
-              return; // benign
-            } else {
-              setAudioError('Unable to play this track (format or network issue)');
-            }
-            setIsPlaying(false);
+      try {
+        setAudioError(null);
+        console.log(`▶️ Attempting to play: ${currentTrack.title}`);
+        
+        // Check if audio is ready
+        if (audio.readyState < 2) { // HAVE_CURRENT_DATA
+          console.log('Audio not ready, loading...');
+          audio.load();
+          await new Promise((resolve) => {
+            const onCanPlay = () => {
+              audio.removeEventListener('canplay', onCanPlay);
+              resolve(true);
+            };
+            audio.addEventListener('canplay', onCanPlay);
           });
         }
-      }, 50);
+        
+        await audio.play();
+        setIsPlaying(true);
+        console.log(`✅ Successfully playing: ${currentTrack.title}`);
+      } catch (err) {
+        console.error('Playback error:', err);
+        const name = (err as any)?.name || '';
+        if (name === 'NotAllowedError') {
+          setAudioError('Click to enable audio playback (browser requires user interaction)');
+        } else if (name === 'AbortError') {
+          console.log('Play aborted (likely due to rapid track switching)');
+          return;
+        } else {
+          setAudioError(`Cannot play "${currentTrack.title}" - ${err.message || 'format or network issue'}`);
+        }
+        setIsPlaying(false);
+      }
     }
-    setIsPlaying(!isPlaying);
   };
 
   const nextTrack = () => {
@@ -272,22 +310,24 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
             key={`${currentCollectionIndex}-${currentTrackIndex}`}
             loop={isLooping && !isShuffled}
             onPlay={() => {
-              console.log(`🎵 Playing: ${currentTrack.title} (${localFile || currentTrack.url || currentTrack.sources?.[0]?.src || 'n/a'})`);
+              console.log(`🎵 Playing: ${currentTrack.title}`);
               setIsPlaying(true);
             }}
             onPause={() => setIsPlaying(false)}
-            onLoadStart={() => console.log(`📥 Loading: ${currentTrack.title} from ${localFile || currentTrack.url || currentTrack.sources?.[0]?.src || 'n/a'}`)}
-            onError={(e) => console.error(`❌ Audio error for ${currentTrack.title}:`, e)}
+            onLoadStart={() => console.log(`📥 Loading: ${currentTrack.title}`)}
             onLoadedMetadata={() => setDuration(audioRef.current?.duration || 0)}
             onTimeUpdate={() => setCurrentTime(audioRef.current?.currentTime || 0)}
             preload="metadata"
-            src={localFile || currentTrack.sources?.[0]?.src || currentTrack.url || undefined}
           >
-            {!localFile && currentTrack.sources?.map((source, index) => (
-              <source key={`${source.src}-${index}`} src={source.src} type={source.type} />
-            ))}
-            {/* Fallback for tracks without sources array */}
-            {!localFile && !currentTrack.sources && <source src={currentTrack.url} type="audio/mpeg" />}
+            {localFile ? (
+              <source src={localFile} type="audio/mpeg" />
+            ) : currentTrack.sources?.length ? (
+              currentTrack.sources.map((source, index) => (
+                <source key={`${source.src}-${index}`} src={source.src} type={source.type} />
+              ))
+            ) : (
+              <source src={currentTrack.url} type="audio/mpeg" />
+            )}
           </audio>
           
           {/* Track Info */}
@@ -420,36 +460,47 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
           </div>
 
           {/* Silence Timer */}
-          <div className="text-center space-y-2">
-            <p className="text-xs text-muted-foreground">Silence in</p>
-            <div className="flex justify-center space-x-2">
+          <div className="text-center space-y-3">
+            <p className="text-sm font-medium text-muted-foreground">Silence in</p>
+            <div className="flex justify-center space-x-3">
               <Button
-                variant={sleepTimer === 1 ? "secondary" : "ghost"}
+                variant={sleepTimer === 1 ? "default" : "outline"}
                 size="sm"
                 onClick={() => sleepTimer === 1 ? clearSleepTimer() : setSleepTimerMinutes(1)}
-                className="text-xs px-3 py-1 h-auto hover-scale"
+                className="text-xs px-4 py-2 h-8 min-w-[60px] transition-all duration-200 hover:scale-105"
               >
                 1 min
               </Button>
               <Button
-                variant={sleepTimer === 5 ? "secondary" : "ghost"}
+                variant={sleepTimer === 5 ? "default" : "outline"}
                 size="sm"
                 onClick={() => sleepTimer === 5 ? clearSleepTimer() : setSleepTimerMinutes(5)}
-                className="text-xs px-3 py-1 h-auto hover-scale"
+                className="text-xs px-4 py-2 h-8 min-w-[60px] transition-all duration-200 hover:scale-105"
               >
                 5 min
               </Button>
               <Button
-                variant={sleepTimer === 15 ? "secondary" : "ghost"}
+                variant={sleepTimer === 15 ? "default" : "outline"}
                 size="sm"
                 onClick={() => sleepTimer === 15 ? clearSleepTimer() : setSleepTimerMinutes(15)}
-                className="text-xs px-3 py-1 h-auto hover-scale"
+                className="text-xs px-4 py-2 h-8 min-w-[60px] transition-all duration-200 hover:scale-105"
               >
                 15 min
               </Button>
+              <Button
+                variant={sleepTimer === 30 ? "default" : "outline"}
+                size="sm"
+                onClick={() => sleepTimer === 30 ? clearSleepTimer() : setSleepTimerMinutes(30)}
+                className="text-xs px-4 py-2 h-8 min-w-[60px] transition-all duration-200 hover:scale-105"
+              >
+                30 min
+              </Button>
             </div>
             {timerActive && (
-              <p className="text-xs text-primary">Silencing in {sleepTimer} minute{sleepTimer !== 1 ? 's' : ''}</p>
+              <div className="inline-flex items-center space-x-2 text-xs text-primary bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                <span>Silencing in {sleepTimer} minute{sleepTimer !== 1 ? 's' : ''}</span>
+              </div>
             )}
           </div>
 

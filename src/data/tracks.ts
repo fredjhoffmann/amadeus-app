@@ -24,7 +24,8 @@ const westClassicalTracks: Track[] = [
     duration: '4:20',
     url: '/audio/debussy-reverie.mp3',
     sources: [
-      { type: 'audio/mpeg', src: '/audio/debussy-reverie.mp3' }
+      { type: 'audio/mpeg', src: '/audio/debussy-reverie.mp3' },
+      { type: 'audio/mpeg', src: '/audio/demo-track.mp3' }
     ],
     performer: 'Archive.org Performance',
     source: 'Archive.org (Debussy Collection)',
@@ -35,9 +36,10 @@ const westClassicalTracks: Track[] = [
     title: 'Nocturne in E-flat major, Op. 9, No. 2',
     composer: 'Frédéric Chopin',
     duration: '4:30',
-    url: '/audio/chopin-nocturne-op9-no2.ogg',
+    url: '/audio/chopin-nocturne-op9-no2.mp3',
     sources: [
-      { type: 'audio/ogg', src: '/audio/chopin-nocturne-op9-no2.ogg' }
+      { type: 'audio/mpeg', src: '/audio/chopin-nocturne-op9-no2.mp3' },
+      { type: 'audio/mpeg', src: '/audio/demo-track.mp3' }
     ],
     performer: 'Wikimedia Commons Performance',
     source: 'Wikimedia Commons',
@@ -50,7 +52,8 @@ const westClassicalTracks: Track[] = [
     duration: '3:33',
     url: '/audio/satie-gymnopedie-1.mp3',
     sources: [
-      { type: 'audio/mpeg', src: '/audio/satie-gymnopedie-1.mp3' }
+      { type: 'audio/mpeg', src: '/audio/satie-gymnopedie-1.mp3' },
+      { type: 'audio/mpeg', src: '/audio/demo-track.mp3' }
     ],
     performer: 'Kevin MacLeod',
     source: 'Free Music Archive',
@@ -63,7 +66,8 @@ const westClassicalTracks: Track[] = [
     duration: '4:45',
     url: '/audio/chopin-nocturne-cs-minor.mp3',
     sources: [
-      { type: 'audio/mpeg', src: '/audio/chopin-nocturne-cs-minor.mp3' }
+      { type: 'audio/mpeg', src: '/audio/chopin-nocturne-cs-minor.mp3' },
+      { type: 'audio/mpeg', src: '/audio/demo-track.mp3' }
     ],
     performer: 'Public Domain Performance',
     source: 'Classical Music Archive',
@@ -76,7 +80,8 @@ const westClassicalTracks: Track[] = [
     duration: '2:30',
     url: '/audio/schumann-traumerei.mp3',
     sources: [
-      { type: 'audio/mpeg', src: '/audio/schumann-traumerei.mp3' }
+      { type: 'audio/mpeg', src: '/audio/schumann-traumerei.mp3' },
+      { type: 'audio/mpeg', src: '/audio/demo-track.mp3' }
     ],
     performer: 'Public Domain Performance',
     source: 'Classical Music Archive',
@@ -89,7 +94,8 @@ const westClassicalTracks: Track[] = [
     duration: '6:30',
     url: '/audio/ravel-pavane.mp3',
     sources: [
-      { type: 'audio/mpeg', src: '/audio/ravel-pavane.mp3' }
+      { type: 'audio/mpeg', src: '/audio/ravel-pavane.mp3' },
+      { type: 'audio/mpeg', src: '/audio/demo-track.mp3' }
     ],
     performer: 'Public Domain Performance',
     source: 'Classical Music Archive',
