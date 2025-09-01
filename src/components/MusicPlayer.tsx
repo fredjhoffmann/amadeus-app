@@ -56,6 +56,8 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const autoPlayNextRef = useRef(false);
+  const wasPlayingRef = useRef(false);
 
   const currentCollection = musicCollections[currentCollectionIndex];
   const currentTrack = currentCollection.tracks[currentTrackIndex];
@@ -77,80 +79,38 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     audio.load();
   }, [currentTrackIndex, currentCollectionIndex, currentTrack]);
 
+  // Keyboard and action button handlers
   useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const handleEnded = () => {
-      if (isLooping) {
-        audio.currentTime = 0;
-        audio.play().catch(err => {
-          console.error('Audio play failed:', err);
-          setAudioError('Playback failed');
-        });
-      } else {
-        nextTrack();
-      }
-    };
-
-    const handleError = (e: Event) => {
-      console.error('Audio error for track:', currentTrack.title, e);
-      const audio = e.target as HTMLAudioElement;
-      console.log('Failed source:', audio.currentSrc);
-      setAudioError(`Cannot load "${currentTrack.title}" - file may be missing or corrupted`);
-      setIsPlaying(false);
-    };
-
-    const handleCanPlay = () => {
-      console.log(`✅ Can play: ${currentTrack.title} from ${audioRef.current?.currentSrc}`);
-      setAudioError(null);
-    };
-
-    const handleLoadedData = () => {
-      console.log(`📊 Loaded data for: ${currentTrack.title}`);
-      setDuration(audio.duration || 0);
-    };
-
     const handleVolumeChange = (e: KeyboardEvent) => {
       if (e.key === 'ArrowUp' && volume < 1) {
         const newVolume = Math.min(volume + 0.1, 1);
         setVolume(newVolume);
-        if (audio) audio.volume = newVolume;
+        if (audioRef.current) audioRef.current.volume = newVolume;
       } else if (e.key === 'ArrowDown' && volume > 0) {
         const newVolume = Math.max(volume - 0.1, 0);
         setVolume(newVolume);
-        if (audio) audio.volume = newVolume;
+        if (audioRef.current) audioRef.current.volume = newVolume;
       } else if (e.key === ' ') {
         e.preventDefault();
         togglePlayPause();
       } else if (e.key === 'F1' || e.code === 'F1') {
-        // Action button press
         e.preventDefault();
         togglePlayPause();
       }
     };
 
-    // Custom action button handler
     const handleActionButton = () => {
       togglePlayPause();
     };
 
-    audio.addEventListener('ended', handleEnded);
-    audio.addEventListener('error', handleError);
-    audio.addEventListener('canplay', handleCanPlay);
-    audio.addEventListener('loadeddata', handleLoadedData);
     window.addEventListener('keydown', handleVolumeChange);
     window.addEventListener('actionbutton', handleActionButton);
 
     return () => {
-      audio.removeEventListener('ended', handleEnded);
-      audio.removeEventListener('error', handleError);
-      audio.removeEventListener('canplay', handleCanPlay);
-      audio.removeEventListener('loadeddata', handleLoadedData);
       window.removeEventListener('keydown', handleVolumeChange);
       window.removeEventListener('actionbutton', handleActionButton);
     };
-  }, [volume, isLooping]);
+  }, [volume]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -203,18 +163,13 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   };
 
   const nextTrack = () => {
+    console.log('🚀 Next track requested');
+    wasPlayingRef.current = isPlaying;
+    autoPlayNextRef.current = isPlaying;
     const nextIndex = (currentTrackIndex + 1) % currentCollection.tracks.length;
     setCurrentTrackIndex(nextIndex);
     setCurrentTime(0);
-    // Auto-play the next track
-    setTimeout(() => {
-      if (audioRef.current) {
-        audioRef.current.play().catch(err => {
-          console.error('Auto-play failed:', err);
-          setAudioError('Auto-play failed - click play to continue');
-        });
-      }
-    }, 100);
+    onTrackSelect?.(nextIndex);
   };
 
   const previousTrack = () => {
@@ -224,9 +179,11 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   };
 
   const selectTrack = (index: number) => {
+    console.log('🎯 Track selected:', index);
+    wasPlayingRef.current = isPlaying;
+    autoPlayNextRef.current = isPlaying;
     setCurrentTrackIndex(index);
     onTrackSelect?.(index);
-    // reset time for new track
     setCurrentTime(0);
   };
 
@@ -302,7 +259,6 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
         <div className="p-6 space-y-6">
           <audio
             ref={audioRef}
-            key={`${currentCollectionIndex}-${currentTrackIndex}`}
             loop={isLooping}
             onPlay={() => {
               console.log(`🎵 Playing: ${currentTrack.title}`);
@@ -312,6 +268,53 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
             onLoadStart={() => console.log(`📥 Loading: ${currentTrack.title}`)}
             onLoadedMetadata={() => setDuration(audioRef.current?.duration || 0)}
             onTimeUpdate={() => setCurrentTime(audioRef.current?.currentTime || 0)}
+            onEnded={() => {
+              console.log('🏁 Track ended');
+              if (isLooping) {
+                console.log('🔄 Looping track');
+                if (audioRef.current) {
+                  audioRef.current.currentTime = 0;
+                  audioRef.current.play().catch(err => {
+                    console.error('Loop play failed:', err);
+                    setAudioError('Playback failed');
+                  });
+                }
+              } else {
+                console.log('➡️ Advancing to next track');
+                nextTrack();
+              }
+            }}
+            onError={(e) => {
+              console.error('Audio error for track:', currentTrack.title, e);
+              setAudioError(`Cannot load "${currentTrack.title}" - file may be missing or corrupted`);
+              setIsPlaying(false);
+            }}
+            onCanPlay={() => {
+              console.log(`✅ Can play: ${currentTrack.title}`);
+              setAudioError(null);
+              
+              // Auto-play if requested
+              if (autoPlayNextRef.current || wasPlayingRef.current) {
+                console.log('🎬 Auto-playing after load');
+                autoPlayNextRef.current = false;
+                wasPlayingRef.current = false;
+                
+                audioRef.current?.play().catch(err => {
+                  console.error('Auto-play failed:', err);
+                  const name = (err as any)?.name || '';
+                  if (name === 'NotAllowedError') {
+                    setAudioError('Click to enable audio playback (browser requires user interaction)');
+                  } else {
+                    setAudioError('Auto-play failed - click play to continue');
+                  }
+                  setIsPlaying(false);
+                });
+              }
+            }}
+            onLoadedData={() => {
+              console.log(`📊 Loaded data for: ${currentTrack.title}`);
+              setDuration(audioRef.current?.duration || 0);
+            }}
             preload="metadata"
           >
             {/* Audio sources handled by direct src assignment in useEffect */}
