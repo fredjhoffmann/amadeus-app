@@ -60,10 +60,45 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   const countdownRef = useRef<NodeJS.Timeout | null>(null);
   const autoPlayNextRef = useRef(false);
   const wasPlayingRef = useRef(false);
+  const sleepEndTimeRef = useRef<number | null>(null);
 
   const currentCollection = musicCollections[currentCollectionIndex];
   const currentTrack = currentCollection.tracks[currentTrackIndex];
 
+
+  // Update Media Session metadata when track changes
+  useEffect(() => {
+    if ('mediaSession' in navigator && currentTrack) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: currentTrack.title,
+        artist: currentTrack.composer,
+        album: currentCollection.name,
+        artwork: [
+          { src: '/favicon.ico', sizes: '96x96', type: 'image/x-icon' }
+        ]
+      });
+
+      // Set up media session action handlers
+      navigator.mediaSession.setActionHandler('play', () => {
+        if (!isPlaying) togglePlayPause();
+      });
+      
+      navigator.mediaSession.setActionHandler('pause', () => {
+        if (isPlaying) togglePlayPause();
+      });
+      
+      navigator.mediaSession.setActionHandler('previoustrack', () => {
+        previousTrack();
+      });
+      
+      navigator.mediaSession.setActionHandler('nexttrack', () => {
+        nextTrack(true);
+      });
+
+      // Update playback state
+      navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused';
+    }
+  }, [currentTrack, currentCollection, isPlaying]);
 
   // Load audio sources when track changes
   useEffect(() => {
@@ -209,46 +244,48 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     
     setSleepTimer(minutes);
     setTimerActive(true);
-    setRemainingTime(minutes * 60); // Set remaining time in seconds
     
-    // Start countdown interval (updates every second)
+    // Store target end time for background-safe calculation
+    const endTime = Date.now() + (minutes * 60 * 1000);
+    sleepEndTimeRef.current = endTime;
+    
+    // Start countdown interval that calculates remaining time from target
     countdownRef.current = setInterval(() => {
-      setRemainingTime(prev => {
-        if (prev <= 1) {
-          clearInterval(countdownRef.current!);
-          return 0;
+      const now = Date.now();
+      const remaining = Math.max(0, Math.ceil((endTime - now) / 1000));
+      setRemainingTime(remaining);
+      
+      if (remaining <= 0) {
+        clearInterval(countdownRef.current!);
+        
+        const audio = audioRef.current;
+        if (audio && !audio.paused) {
+          // Smooth fade out over 3 seconds
+          const steps = 15;
+          const totalMs = 3000;
+          const startVol = audio.volume;
+          let count = 0;
+          if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+          fadeIntervalRef.current = setInterval(() => {
+            count += 1;
+            const newVol = Math.max(0, startVol * (1 - count / steps));
+            audio.volume = newVol;
+            if (count >= steps) {
+              clearInterval(fadeIntervalRef.current!);
+              audio.pause();
+              setIsPlaying(false);
+              // restore user volume setting
+              audio.volume = isMuted ? 0 : volume;
+            }
+          }, totalMs / steps);
         }
-        return prev - 1;
-      });
-    }, 1000);
-    
-    // Set main timer
-    timerRef.current = setTimeout(() => {
-      const audio = audioRef.current;
-      if (audio && isPlaying) {
-        // Smooth fade out over 3 seconds
-        const steps = 15;
-        const totalMs = 3000;
-        const startVol = audio.volume;
-        let count = 0;
-        if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
-        fadeIntervalRef.current = setInterval(() => {
-          count += 1;
-          const newVol = Math.max(0, startVol * (1 - count / steps));
-          audio.volume = newVol;
-          if (count >= steps) {
-            clearInterval(fadeIntervalRef.current!);
-            audio.pause();
-            setIsPlaying(false);
-            // restore user volume setting
-            audio.volume = isMuted ? 0 : volume;
-          }
-        }, totalMs / steps);
+        
+        setTimerActive(false);
+        setSleepTimer(null);
+        setRemainingTime(0);
+        sleepEndTimeRef.current = null;
       }
-      setTimerActive(false);
-      setSleepTimer(null);
-      setRemainingTime(0);
-    }, minutes * 60 * 1000);
+    }, 1000);
   };
 
   const clearSleepTimer = () => {
@@ -258,10 +295,23 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     if (countdownRef.current) {
       clearInterval(countdownRef.current);
     }
+    if (fadeIntervalRef.current) {
+      clearInterval(fadeIntervalRef.current);
+    }
     setSleepTimer(null);
     setTimerActive(false);
     setRemainingTime(0);
+    sleepEndTimeRef.current = null;
   };
+
+  // Clean up timers on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      if (countdownRef.current) clearInterval(countdownRef.current);
+      if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+    };
+  }, []);
 
   return (
     <div className="space-y-4">

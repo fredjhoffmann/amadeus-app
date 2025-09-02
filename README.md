@@ -125,6 +125,8 @@ For background audio playback (recommended for this music app):
 4. Add "Background Modes" capability
 5. Check "Audio, AirPlay, and Picture in Picture"
 
+**Background Audio**: Once enabled, the app will continue playing music with the screen locked and provide native lock screen controls.
+
 ### Development with Hot Reload
 
 The app is configured to load from the Lovable preview URL for development, enabling hot reload on your device when connected to the same network.
