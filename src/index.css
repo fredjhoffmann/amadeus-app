@@ -8,57 +8,63 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Amadeus - Classical Bedtime Theme */
-    --background: 240 15% 8%;
-    --foreground: 45 100% 88%;
+    /* iOS 18 Inspired Theme - Vibrant & Modern */
+    --background: 240 20% 6%;
+    --foreground: 48 100% 96%;
 
-    --card: 240 12% 12%;
-    --card-foreground: 45 95% 85%;
+    --card: 240 15% 10%;
+    --card-foreground: 48 95% 92%;
 
-    --popover: 240 12% 10%;
-    --popover-foreground: 45 95% 85%;
+    --popover: 240 18% 8%;
+    --popover-foreground: 48 95% 92%;
 
-    --primary: 45 95% 75%;
-    --primary-foreground: 240 15% 8%;
+    --primary: 48 100% 65%;
+    --primary-foreground: 240 20% 6%;
 
-    --secondary: 240 8% 18%;
-    --secondary-foreground: 45 90% 80%;
+    --secondary: 240 10% 14%;
+    --secondary-foreground: 48 90% 88%;
 
-    --muted: 240 8% 15%;
-    --muted-foreground: 45 50% 65%;
+    --muted: 240 12% 12%;
+    --muted-foreground: 48 40% 70%;
 
-    --accent: 260 40% 25%;
-    --accent-foreground: 45 95% 85%;
+    --accent: 260 60% 45%;
+    --accent-foreground: 48 100% 96%;
 
-    --destructive: 0 75% 55%;
-    --destructive-foreground: 45 95% 90%;
+    --destructive: 0 80% 60%;
+    --destructive-foreground: 48 100% 96%;
 
-    --border: 240 8% 20%;
-    --input: 240 8% 18%;
-    --ring: 45 80% 70%;
+    --border: 240 10% 18%;
+    --input: 240 12% 14%;
+    --ring: 48 90% 65%;
 
-    /* Custom Design Tokens */
-    --primary-glow: 45 100% 82%;
-    --classical-gold: 45 95% 75%;
-    --midnight-blue: 240 15% 8%;
-    --deep-purple: 260 40% 25%;
-    --soft-lavender: 270 30% 35%;
+    /* iOS 18 Design Tokens */
+    --primary-glow: 48 100% 75%;
+    --ios-gold: 48 100% 65%;
+    --ios-blue: 220 90% 56%;
+    --ios-purple: 260 60% 45%;
+    --ios-lavender: 270 50% 55%;
+    --frosted-glass: 240 15% 10% / 0.7;
     
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-background: linear-gradient(180deg, hsl(var(--background)), hsl(240 12% 6%));
-    --gradient-accent: linear-gradient(135deg, hsl(var(--deep-purple)), hsl(var(--soft-lavender)));
+    /* iOS 18 Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(48 95% 75%) 100%);
+    --gradient-background: linear-gradient(180deg, hsl(240 20% 6%) 0%, hsl(240 25% 4%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(260 60% 45%) 0%, hsl(270 50% 55%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(240 15% 10% / 0.8) 0%, hsl(240 12% 12% / 0.6) 100%);
     
-    /* Shadows */
-    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.2);
-    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.15);
-    --shadow-card: 0 4px 20px -4px hsl(240 20% 0% / 0.3);
+    /* iOS 18 Shadows - Softer & Layered */
+    --shadow-elegant: 0 8px 32px -8px hsl(0 0% 0% / 0.4), 0 2px 8px -2px hsl(0 0% 0% / 0.2);
+    --shadow-glow: 0 0 48px hsl(var(--primary-glow) / 0.25), 0 0 24px hsl(var(--primary-glow) / 0.15);
+    --shadow-card: 0 8px 24px -6px hsl(0 0% 0% / 0.3), 0 0 1px hsl(240 10% 100% / 0.05);
+    --shadow-button: 0 4px 16px -4px hsl(0 0% 0% / 0.3);
+    --shadow-float: 0 12px 40px -8px hsl(0 0% 0% / 0.5), 0 0 2px hsl(240 10% 100% / 0.1);
     
-    /* Animations */
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    /* iOS 18 Animations - Spring-based */
+    --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     --transition-gentle: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -78,26 +84,26 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Dark mode uses same tokens as root for consistency */
-    --background: 240 15% 8%;
-    --foreground: 45 100% 88%;
-    --card: 240 12% 12%;
-    --card-foreground: 45 95% 85%;
-    --popover: 240 12% 10%;
-    --popover-foreground: 45 95% 85%;
-    --primary: 45 95% 75%;
-    --primary-foreground: 240 15% 8%;
-    --secondary: 240 8% 18%;
-    --secondary-foreground: 45 90% 80%;
-    --muted: 240 8% 15%;
-    --muted-foreground: 45 50% 65%;
-    --accent: 260 40% 25%;
-    --accent-foreground: 45 95% 85%;
-    --destructive: 0 75% 55%;
-    --destructive-foreground: 45 95% 90%;
-    --border: 240 8% 20%;
-    --input: 240 8% 18%;
-    --ring: 45 80% 70%;
+    /* Dark mode uses same iOS 18 tokens */
+    --background: 240 20% 6%;
+    --foreground: 48 100% 96%;
+    --card: 240 15% 10%;
+    --card-foreground: 48 95% 92%;
+    --popover: 240 18% 8%;
+    --popover-foreground: 48 95% 92%;
+    --primary: 48 100% 65%;
+    --primary-foreground: 240 20% 6%;
+    --secondary: 240 10% 14%;
+    --secondary-foreground: 48 90% 88%;
+    --muted: 240 12% 12%;
+    --muted-foreground: 48 40% 70%;
+    --accent: 260 60% 45%;
+    --accent-foreground: 48 100% 96%;
+    --destructive: 0 80% 60%;
+    --destructive-foreground: 48 100% 96%;
+    --border: 240 10% 18%;
+    --input: 240 12% 14%;
+    --ring: 48 90% 65%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -118,25 +124,54 @@ All colors MUST be HSL.
     @apply bg-background text-foreground font-sans;
   }
 
-  /* Custom slider styles */
+  /* iOS 18 Style Slider */
   .slider::-webkit-slider-thumb {
     appearance: none;
-    height: 12px;
-    width: 12px;
+    height: 16px;
+    width: 16px;
     border-radius: 50%;
     background: hsl(var(--primary));
     cursor: pointer;
     box-shadow: var(--shadow-elegant);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
   }
 
   .slider::-moz-range-thumb {
-    height: 12px;
-    width: 12px;
+    height: 16px;
+    width: 16px;
     border-radius: 50%;
     background: hsl(var(--primary));
     cursor: pointer;
     border: none;
     box-shadow: var(--shadow-elegant);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slider::-moz-range-thumb:hover {
+    transform: scale(1.15);
+  }
+
+  /* Scrollbar styling for iOS feel */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: hsl(var(--muted) / 0.2);
+    border-radius: 999px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 999px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
   }
 
   /* Reduce animations for battery life */

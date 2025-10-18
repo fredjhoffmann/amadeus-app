@@ -47,16 +47,16 @@ const Index = () => {
     <div 
       className="min-h-screen bg-gradient-background transition-all duration-1000 ease-in-out"
       style={{
-        backgroundImage: `linear-gradient(rgba(34, 31, 70, 0.85), rgba(26, 23, 61, 0.95)), url(${getBackgroundImage()})`,
+        backgroundImage: `linear-gradient(rgba(20, 18, 48, 0.90), rgba(15, 13, 38, 0.95)), url(${getBackgroundImage()})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed'
       }}
     >
-      <div className="container mx-auto px-4 py-8 max-w-md">
+      <div className="container mx-auto px-6 py-12 max-w-lg">
         <MeditationPrompt track={musicCollections[currentCollectionIndex].tracks[currentTrackIndex]} />
         
-        <div className="space-y-6 mt-8">
+        <div className="space-y-8 mt-12">
           <MusicPlayer 
             currentCollectionIndex={currentCollectionIndex}
             currentTrackIndex={currentTrackIndex}
@@ -65,9 +65,9 @@ const Index = () => {
           />
           
           {/* Collection Selector Buttons */}
-          <Card className="bg-card/20 border border-border/10 backdrop-blur-sm">
-            <div className="p-4 space-y-3">
-              <p className="text-sm text-muted-foreground text-center">Music Collection</p>
+          <Card className="bg-card/50 border border-border/30 backdrop-blur-xl shadow-card overflow-hidden">
+            <div className="p-6 space-y-4">
+              <p className="text-sm text-muted-foreground/80 text-center font-medium">Music Collection</p>
               <div className="flex justify-center space-x-3">
                 {musicCollections.map((collection, index) => (
                   <Button
@@ -75,13 +75,15 @@ const Index = () => {
                     variant={currentCollectionIndex === index ? "default" : "ghost"}
                     size="sm"
                     onClick={() => handleCollectionChange(index)}
-                    className="text-sm px-4 py-2"
+                    className={`text-sm px-5 py-2.5 rounded-xl ${
+                      currentCollectionIndex === index ? 'shadow-glow' : ''
+                    }`}
                   >
                     {collection.name}
                   </Button>
                 ))}
               </div>
-              <p className="text-xs text-muted-foreground/60 text-center">
+              <p className="text-xs text-muted-foreground/50 text-center font-medium">
                 {musicCollections[currentCollectionIndex].tracks.length} tracks available
               </p>
             </div>

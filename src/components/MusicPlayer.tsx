@@ -314,9 +314,9 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   }, []);
 
   return (
-    <div className="space-y-4">
-      <Card className="bg-card/30 border border-border/20 backdrop-blur-sm shadow-card">
-        <div className="p-6 space-y-6">
+    <div className="space-y-6">
+      <Card className="bg-card/60 border border-border/30 backdrop-blur-xl shadow-float">
+        <div className="p-8 space-y-8">
           <audio
             ref={audioRef}
             loop={isLooping}
@@ -380,10 +380,10 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
           </audio>
           
           {/* Track Info */}
-          <div className="text-center space-y-2">
-            <h2 className="text-xl font-serif text-foreground leading-tight">{currentTrack.title}</h2>
-            <p className="text-muted-foreground font-serif italic">{currentTrack.composer}</p>
-            <p className="text-sm text-muted-foreground">{currentTrack.duration}</p>
+          <div className="text-center space-y-3">
+            <h2 className="text-2xl font-semibold text-foreground leading-tight tracking-tight">{currentTrack.title}</h2>
+            <p className="text-muted-foreground font-medium">{currentTrack.composer}</p>
+            <p className="text-sm text-muted-foreground/70 font-mono">{currentTrack.duration}</p>
             
             {audioError && (
               <div className="text-xs text-destructive bg-destructive/10 px-3 py-2 rounded border border-destructive/20 animate-fade-in">
@@ -399,26 +399,26 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
           </div>
 
           {/* Main Controls */}
-          <div className="flex items-center justify-center space-x-4">
+          <div className="flex items-center justify-center space-x-6">
             <Button
               variant="minimal"
               size="icon"
               onClick={previousTrack}
-              className="rounded-full"
+              className="rounded-full h-12 w-12"
             >
-              <SkipBack className="h-5 w-5" />
+              <SkipBack className="h-6 w-6" strokeWidth={2.5} />
             </Button>
             
             <Button
               variant="control"
               size="lg"
               onClick={togglePlayPause}
-              className="rounded-full w-16 h-16"
+              className="rounded-full w-20 h-20 shadow-glow hover:shadow-float active:scale-90"
             >
               {isPlaying ? (
-                <Pause className="h-8 w-8" />
+                <Pause className="h-9 w-9" strokeWidth={2.5} />
               ) : (
-                <Play className="h-8 w-8" />
+                <Play className="h-9 w-9 ml-1" strokeWidth={2.5} />
               )}
             </Button>
             
@@ -426,9 +426,9 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
               variant="minimal"
               size="icon"
               onClick={() => nextTrack(true)}
-              className="rounded-full"
+              className="rounded-full h-12 w-12"
             >
-              <SkipForward className="h-5 w-5" />
+              <SkipForward className="h-6 w-6" strokeWidth={2.5} />
             </Button>
           </div>
 
@@ -451,7 +451,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
           </div>
 
           {/* Progress */}
-          <div className="space-y-1 px-6">
+          <div className="space-y-2 px-4">
             <input
               type="range"
               min={0}
@@ -465,9 +465,9 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
                 }
                 setCurrentTime(t);
               }}
-              className="w-full h-1 bg-muted rounded-lg appearance-none cursor-pointer slider"
+              className="w-full h-1.5 bg-secondary/50 rounded-full appearance-none cursor-pointer slider"
             />
-            <div className="flex justify-between text-xs text-muted-foreground">
+            <div className="flex justify-between text-xs text-muted-foreground/70 font-mono">
               <span>{`${Math.floor(currentTime / 60)}:${String(Math.floor(currentTime % 60)).padStart(2, '0')}`}</span>
               <span>{`${Math.floor((duration || 0) / 60)}:${String(Math.floor((duration || 0) % 60)).padStart(2, '0')}`}</span>
             </div>
