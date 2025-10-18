@@ -115,17 +115,25 @@ For convenience, you can add these scripts to your local package.json after clon
 
 Then use: `npm run ios:add`, `npm run ios:sync`, `npm run ios:open`, `npm run ios:run`
 
-### iOS Configuration
+### ⚠️ CRITICAL: iOS Configuration for Background Audio
 
-For background audio playback (recommended for this music app):
+**IMPORTANT:** For audio to continue playing when the screen is locked or when the app is in the background, you **MUST** enable Background Modes in Xcode. Without this step, audio will stop when the screen locks.
 
-1. Open the iOS project in Xcode
-2. Select your app target
-3. Go to "Signing & Capabilities"
-4. Add "Background Modes" capability
-5. Check "Audio, AirPlay, and Picture in Picture"
+**Required Steps:**
+1. Open the project in Xcode: `npx cap open ios`
+2. Select your app target in the project navigator
+3. Go to the "Signing & Capabilities" tab
+4. Click "+ Capability" and add "Background Modes"
+5. **Check the box for "Audio, AirPlay, and Picture in Picture"**
+6. Build and run the app
 
-**Background Audio**: Once enabled, the app will continue playing music with the screen locked and provide native lock screen controls.
+This enables:
+- Audio playback when screen is locked
+- Lock screen media controls (play, pause, skip)
+- Background playback when app is minimized
+- Sleep timer functionality during locked screen
+
+The Media Session API integration in the code will automatically provide lock screen controls once Background Modes is enabled.
 
 ### Development with Hot Reload
 

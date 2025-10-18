@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { TrackList } from '@/components/TrackList';
@@ -45,16 +45,13 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   const [volume, setVolume] = useState(0.3);
   const [isMuted, setIsMuted] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
-  const [showTrackList, setShowTrackList] = useState(false);
   const [audioError, setAudioError] = useState<string | null>(null);
-  const [localFile, setLocalFile] = useState<string | null>(null);
   const [sleepTimer, setSleepTimer] = useState<number | null>(null);
   const [timerActive, setTimerActive] = useState(false);
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const countdownRef = useRef<NodeJS.Timeout | null>(null);
@@ -65,6 +62,65 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
   const currentCollection = musicCollections[currentCollectionIndex];
   const currentTrack = currentCollection.tracks[currentTrackIndex];
 
+  const togglePlayPause = useCallback(async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+    } else {
+      try {
+        setAudioError(null);
+        console.log(`▶️ Attempting to play: ${currentTrack.title}`);
+        
+        // Check if audio is ready
+        if (audio.readyState < 2) { // HAVE_CURRENT_DATA
+          console.log('Audio not ready, loading...');
+          audio.load();
+          await new Promise((resolve) => {
+            const onCanPlay = () => {
+              audio.removeEventListener('canplay', onCanPlay);
+              resolve(true);
+            };
+            audio.addEventListener('canplay', onCanPlay);
+          });
+        }
+        
+        await audio.play();
+        setIsPlaying(true);
+        console.log(`✅ Successfully playing: ${currentTrack.title}`);
+      } catch (err) {
+        console.error('Playback error:', err);
+        const name = (err as any)?.name || '';
+        if (name === 'NotAllowedError') {
+          setAudioError('Click to enable audio playback (browser requires user interaction)');
+        } else if (name === 'AbortError') {
+          console.log('Play aborted (likely due to rapid track switching)');
+          return;
+        } else {
+          setAudioError(`Cannot play "${currentTrack.title}" - ${(err as Error).message || 'format or network issue'}`);
+        }
+        setIsPlaying(false);
+      }
+    }
+  }, [isPlaying, currentTrack]);
+
+  const nextTrack = useCallback((autoplay: boolean = false) => {
+    console.log('🚀 Next track requested, autoplay:', autoplay);
+    autoPlayNextRef.current = autoplay;
+    const nextIndex = (currentTrackIndex + 1) % currentCollection.tracks.length;
+    setCurrentTrackIndex(nextIndex);
+    setCurrentTime(0);
+    onTrackSelect?.(nextIndex);
+  }, [currentTrackIndex, currentCollection.tracks.length, onTrackSelect]);
+
+  const previousTrack = useCallback(() => {
+    const prevIndex = currentTrackIndex === 0 ? currentCollection.tracks.length - 1 : currentTrackIndex - 1;
+    setCurrentTrackIndex(prevIndex);
+    setCurrentTime(0);
+    onTrackSelect?.(prevIndex);
+  }, [currentTrackIndex, currentCollection.tracks.length, onTrackSelect]);
 
   // Update Media Session metadata when track changes
   useEffect(() => {
@@ -98,7 +154,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
       // Update playback state
       navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused';
     }
-  }, [currentTrack, currentCollection, isPlaying]);
+  }, [currentTrack, currentCollection, isPlaying, togglePlayPause, previousTrack, nextTrack]);
 
   // Load audio sources when track changes
   useEffect(() => {
@@ -147,7 +203,7 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
       window.removeEventListener('keydown', handleVolumeChange);
       window.removeEventListener('actionbutton', handleActionButton);
     };
-  }, [volume]);
+  }, [volume, togglePlayPause]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -155,64 +211,6 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
     }
   }, [volume, isMuted]);
 
-  const togglePlayPause = async () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (isPlaying) {
-      audio.pause();
-      setIsPlaying(false);
-    } else {
-      try {
-        setAudioError(null);
-        console.log(`▶️ Attempting to play: ${currentTrack.title}`);
-        
-        // Check if audio is ready
-        if (audio.readyState < 2) { // HAVE_CURRENT_DATA
-          console.log('Audio not ready, loading...');
-          audio.load();
-          await new Promise((resolve) => {
-            const onCanPlay = () => {
-              audio.removeEventListener('canplay', onCanPlay);
-              resolve(true);
-            };
-            audio.addEventListener('canplay', onCanPlay);
-          });
-        }
-        
-        await audio.play();
-        setIsPlaying(true);
-        console.log(`✅ Successfully playing: ${currentTrack.title}`);
-      } catch (err) {
-        console.error('Playback error:', err);
-        const name = (err as any)?.name || '';
-        if (name === 'NotAllowedError') {
-          setAudioError('Click to enable audio playback (browser requires user interaction)');
-        } else if (name === 'AbortError') {
-          console.log('Play aborted (likely due to rapid track switching)');
-          return;
-        } else {
-          setAudioError(`Cannot play "${currentTrack.title}" - ${err.message || 'format or network issue'}`);
-        }
-        setIsPlaying(false);
-      }
-    }
-  };
-
-  const nextTrack = (autoplay: boolean = false) => {
-    console.log('🚀 Next track requested, autoplay:', autoplay);
-    autoPlayNextRef.current = autoplay;
-    const nextIndex = (currentTrackIndex + 1) % currentCollection.tracks.length;
-    setCurrentTrackIndex(nextIndex);
-    setCurrentTime(0);
-    onTrackSelect?.(nextIndex);
-  };
-
-  const previousTrack = () => {
-    const prevIndex = currentTrackIndex === 0 ? currentCollection.tracks.length - 1 : currentTrackIndex - 1;
-    setCurrentTrackIndex(prevIndex);
-    setCurrentTime(0);
-  };
 
   const selectTrack = (index: number) => {
     console.log('🎯 Track selected:', index);
@@ -388,12 +386,6 @@ export const MusicPlayer: React.FC<MusicPlayerProps> = ({
             {audioError && (
               <div className="text-xs text-destructive bg-destructive/10 px-3 py-2 rounded border border-destructive/20 animate-fade-in">
                 ⚠️ {audioError}
-              </div>
-            )}
-            
-            {localFile && (
-              <div className="text-xs text-primary bg-primary/10 px-3 py-2 rounded border border-primary/20">
-                🎵 Playing local file
               </div>
             )}
           </div>
