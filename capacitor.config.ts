@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.lovable.1f6100e822fe40b29f677c49279b1779',
+  appId: 'app.lovable.amadeusapp',
   appName: 'amadeus-app',
   webDir: 'dist',
   server: {
